@@ -2,18 +2,35 @@ import pprint
 import requests
 
 
-def main():
-    things_to_do_resp = requests.get(
-        "https://api.axios.com/api/render/stream/content?audience_slug=washington-dc&topic_slug=things-to-do"
-    ).json()["results"]
-    sports_resp = requests.get(
-        "https://api.axios.com/api/render/stream/content?audience_slug=washington-dc&topic_slug=sports"
-    ).json()["results"]
+def sluggify(value):
+    return value.replace(" ", "-").lower()
 
-    things_to_do_content = []
-    for id in things_to_do_resp:
+
+def get_topic_key(content_topics, req_topics):
+    current_topic = next(
+        topic.get("name") for topic in content_topics if topic.get("name") in req_topics
+    )
+    return current_topic
+
+
+def get_dash_content(audience, topics):
+    dash_content = {}
+    content_ids = []
+
+    for topic in topics:
+        resp = (
+            requests.get(
+                f"https://api.axios.com/api/render/stream/content?audience_slug={sluggify(audience)}&topic_slug={sluggify(topic)}"
+            )
+            .json()
+            .get("results")
+        )
+        content_ids.extend(resp)
+        dash_content[topic] = []
+
+    for id in content_ids:
         resp = requests.get(f"https://api.axios.com/api/render/content/{id}/")
-        things_to_do_content.append(
+        dash_content[get_topic_key(resp.json().get("topics"), topics)].append(
             {
                 "headline": resp.json().get("headline"),
                 "permalink": resp.json().get("permalink"),
@@ -21,20 +38,9 @@ def main():
             }
         )
 
-    sports_content = []
-    for id in sports_resp:
-        resp = requests.get(f"https://api.axios.com/api/render/content/{id}/")
-        sports_content.append(
-            {
-                "headline": resp.json().get("headline"),
-                "permalink": resp.json().get("permalink"),
-                "published": resp.json().get("published_date"),
-            }
-        )
-
-    resp = {"Things To Do": things_to_do_content, "Sports": sports_content}
-    pprint.pprint(resp)
+    pprint.pprint(dash_content)
+    return dash_content
 
 
 if __name__ == "__main__":
-    main()
+    get_dash_content("Washington DC", ["Things to Do", "Sports"])
