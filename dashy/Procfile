@@ -1,1 +1,1 @@
-web: gunicorn dash-heroku-interactiveboard:server
+web:gunicorn app:server
