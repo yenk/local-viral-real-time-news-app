@@ -79,7 +79,6 @@ def get_dash_content(audience, topics):
             }
         )
 
-    pprint.pprint(dash_content)
     return dash_content
 
 
@@ -127,7 +126,64 @@ def get_local_live_covid_data(county):
     return live_data.to_csv()
 
 
+def get_local_weather_data(zip):
+    """
+    grabs today's weather data for the given US zip code
+
+    param zip: stringified US zip code (ie 20001 for Washington DC)
+    return: json data with today's weather stats (see example output below)
+    {
+        'base': 'stations',
+        'clouds': {'all': 0},
+        'cod': 200,
+        'coord': {'lat': 38.9122,'lon': -77.0177},
+        'dt': 1649709422,
+        'id': 4138106,
+        'main': {
+            'feels_like': 291.36,
+            'humidity': 41,
+            'pressure': 1016,
+            'temp': 292.32,
+            'temp_max': 294.83,
+            'temp_min': 288.13
+        },
+        'name': 'District of Columbia',
+        'sys': {
+            'country': 'US',
+            'id': 2002287,
+            'sunrise': 1649673433,
+            'sunset': 1649720432,
+            'type': 2
+        },
+        'timezone': -14400,
+        'visibility': 10000,
+        'weather': [{
+            'description': 'clear sky',
+            'icon': '01d',
+            'id': 800,
+            'main': 'Clear'
+        }],
+        'wind': {'deg': 150,'speed': 5.14}
+    }
+    """
+
+    api_key = "fb8d8414adc882229cec5abc077b21e1"
+
+    resp = requests.get(
+        f"http://api.openweathermap.org/geo/1.0/zip?zip={zip},US&appid={api_key}"
+    )
+    lat = resp.json().get("lat")
+    lon = resp.json().get("lon")
+
+    weather_data = requests.get(
+        f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}"
+    ).json()
+
+    return weather_data
+
+
 if __name__ == "__main__":
-    print(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
+    pprint.pprint(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
     print(get_local_avg_covid_data("District of Columbia"))
     print(get_local_live_covid_data("District of Columbia"))
+    pprint.pprint(get_local_weather_data("20001"))
