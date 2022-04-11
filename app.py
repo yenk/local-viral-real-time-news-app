@@ -1,3 +1,4 @@
+import webbrowser
 import dash
 import dash_core_components as dcc
 import dash_bootstrap_components as dbc
@@ -45,7 +46,7 @@ if __name__ == "__main__":
     app.run_server(debug=False, host='0.0.0.0', port=8050)
 
 
-
+webbrowser.open('GFG.html') 
 
 
 
