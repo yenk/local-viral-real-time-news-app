@@ -41,12 +41,11 @@ server.wsgi_app = WhiteNoise(server.wsgi_app, root='static/')
 # # Construct the dash layout
 # create_dash_layout(app)
 
+webbrowser.open('web/hack.html') 
+
 # Run flask app
 if __name__ == "__main__":
     app.run_server(debug=False, host='0.0.0.0', port=8050)
-
-
-webbrowser.open('web/hack.html') 
 
 
 
