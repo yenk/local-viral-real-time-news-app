@@ -18,35 +18,35 @@ server = app.server
 # Enable Whitenoise for serving static files from Heroku (the /static folder is seen as root by Heroku) 
 server.wsgi_app = WhiteNoise(server.wsgi_app, root='static/') 
 
-# Define Dash layout
-def create_dash_layout(app):
+# # Define Dash layout
+# def create_dash_layout(app):
 
-    # Set browser tab title
-    app.title = "Welcome to Axios Local DC's News!" #browser tab
+#     # Set browser tab title
+#     app.title = "Welcome to Axios Local DC's News!" #browser tab
     
-    # Header
-    header = html.Div([html.Br(), dcc.Markdown(""" # Welcome to Axios Best and Foremost DC's Local News! """), html.Br()])
+#     # Header
+#     header = html.Div([html.Br(), dcc.Markdown(""" # Welcome to Axios Best and Foremost DC's Local News! """), html.Br()])
     
-    # Body 
-    body = html.Div([dcc.Markdown(""" See What's Happening in DC! """), html.Br(), html.Img(src='dc_heading.png')])
+#     # Body 
+#     body = html.Div([dcc.Markdown(""" See What's Happening in DC! """), html.Br(), html.Img(src='dc_heading.png')])
 
-    # Footer
-    footer = html.Div([html.Br(), html.Br(), dcc.Markdown(""" ### Built at ![Image](logo.png) with ![Image](heart.png) using [Dash](https://plotly.com/dash/) and [Heroku](https://devcenter.heroku.com/) """)])
+#     # Footer
+#     footer = html.Div([html.Br(), html.Br(), dcc.Markdown(""" ### Built at ![Image](logo.png) with ![Image](heart.png) using [Dash](https://plotly.com/dash/) and [Heroku](https://devcenter.heroku.com/) """)])
     
-    # Assemble dash layout 
-    app.layout = html.Div([header, body, footer])
+#     # Assemble dash layout 
+#     app.layout = html.Div([header, body, footer])
 
-    return app
+#     return app
 
-# Construct the dash layout
-create_dash_layout(app)
+# # Construct the dash layout
+# create_dash_layout(app)
 
 # Run flask app
 if __name__ == "__main__":
     app.run_server(debug=False, host='0.0.0.0', port=8050)
 
 
-webbrowser.open('GFG.html') 
+webbrowser.open('web/hack.html') 
 
 
 
