@@ -1,4 +1,6 @@
+import datetime
 import pandas
+import pendulum
 import pprint
 import requests
 
@@ -79,7 +81,6 @@ def get_dash_content(audience, topics):
             }
         )
 
-    pprint.pprint(dash_content)
     return dash_content
 
 
@@ -127,7 +128,145 @@ def get_local_live_covid_data(county):
     return live_data.to_csv()
 
 
+def get_local_weather_data(zip):
+    """
+    grabs today's weather data for the given US zip code
+
+    param zip: stringified US zip code (ie 20001 for Washington DC)
+    return: json data with today's weather stats (see example output below)
+    {
+        'base': 'stations',
+        'clouds': {'all': 0},
+        'cod': 200,
+        'coord': {'lat': 38.9122,'lon': -77.0177},
+        'dt': 1649709422,
+        'id': 4138106,
+        'main': {
+            'feels_like': 291.36,
+            'humidity': 41,
+            'pressure': 1016,
+            'temp': 292.32,
+            'temp_max': 294.83,
+            'temp_min': 288.13
+        },
+        'name': 'District of Columbia',
+        'sys': {
+            'country': 'US',
+            'id': 2002287,
+            'sunrise': 1649673433,
+            'sunset': 1649720432,
+            'type': 2
+        },
+        'timezone': -14400,
+        'visibility': 10000,
+        'weather': [{
+            'description': 'clear sky',
+            'icon': '01d',
+            'id': 800,
+            'main': 'Clear'
+        }],
+        'wind': {'deg': 150,'speed': 5.14}
+    }
+    """
+
+    api_key = "fb8d8414adc882229cec5abc077b21e1"
+
+    resp = requests.get(
+        f"http://api.openweathermap.org/geo/1.0/zip?zip={zip},US&appid={api_key}"
+    )
+    lat = resp.json().get("lat")
+    lon = resp.json().get("lon")
+
+    weather_data = requests.get(
+        f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}"
+    ).json()
+
+    return weather_data
+
+
+def get_local_event_data(zip, radius):
+    """
+    grabs upcoming weekend events for the given US zip code and mile radius
+
+    param zip: stringified US zip code (ie 20001 for Washington DC)
+    param radius: radius to search in miles (ie 50 for a 50 mile radius around the given zip code)
+
+    return: json data with event info (see example output below)
+    {
+        'events': [
+            {
+                'description': None,
+                'end': '',
+                'name': 'Melvin Seals & JGB with special guest Ron Holloway ',
+                'start': 'Friday, April 15, 12:00',
+                'url': 'https://www.ticketmaster.com/melvin-seals-jgb-with-special-guest-washington-district-of-columbia-04-14-2022/event/15005B8A0F6F75D2',
+                'venue': '9:30 CLUB'
+            },
+            {
+                'description': None,
+                'end': '',
+                'name': 'Man On Man',
+                'start': 'Sunday, April 17, 12:00',
+                'url': 'https://www.ticketmaster.com/event/Z7r9jZ1Ad8paP',
+                'venue': 'DC9 Nightclub'
+            },
+            {
+                'description': None,
+                'end': '',
+                'name': "So Fetch: All the Best Music from the '00s",
+                'start': 'Saturday, April 16, 12:00',
+                'url': 'https://www.ticketmaster.com/so-fetch-all-the-best-music-washington-district-of-columbia-04-15-2022/event/15005C8B8EEC1464',
+                'venue': '9:30 CLUB'
+            }
+        ]
+    }
+    """
+
+    api_key = "dDtYgvRTpfJgiiACZzfWQW6922qTTqX2"
+
+    weekend_start = pendulum.now().next(pendulum.FRIDAY).strftime("%Y-%m-%dT%H:%M:%SZ")
+    weekend_end = pendulum.now().next(pendulum.SUNDAY).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    resp = requests.get(
+        f"https://app.ticketmaster.com/discovery/v2/events?apikey={api_key}&locale=*&startDateTime={str(weekend_start)}&endDateTime={str(weekend_end)}&postalCode={str(zip)}&radius={str(radius)}&unit=miles"
+    )
+
+    events = {"events": []}
+    for event in resp.json().get("_embedded").get("events"):
+        details = {}
+        details["name"] = event.get("name")
+        details["url"] = event.get("url")
+        details["description"] = event.get("description")
+
+        # get formatted date and time based on given time zone
+        tz = event.get("dates").get("start").get("timezone")
+        start = event.get("dates").get("start").get("dateTime")
+        if start != "":
+            start = (
+                datetime.datetime.strptime(start, "%Y-%m-%dT%H:%M:%SZ")
+                .replace(tzinfo=tz)
+                .strftime("%A, %B %d, %I:%M")
+            )
+        end = event.get("dates").get("end", {}).get("dateTime", "")
+        if end != "":
+            end = (
+                datetime.datetime.strptime(end, "%Y-%m-%dT%H:%M:%SZ")
+                .replace(tzinfo=tz)
+                .strftime("%I:%M")
+            )
+
+        details["start"] = start
+        details["end"] = end
+        details["venue"] = event.get("_embedded").get("venues")[0].get("name")
+
+        events["events"].append(details)
+
+    return events
+
+
 if __name__ == "__main__":
-    print(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
+    pprint.pprint(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
     print(get_local_avg_covid_data("District of Columbia"))
     print(get_local_live_covid_data("District of Columbia"))
+    pprint.pprint(get_local_weather_data("20001"))
+    pprint.pprint(get_local_event_data("20001", 50))
