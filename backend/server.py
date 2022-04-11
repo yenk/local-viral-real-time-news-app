@@ -1,3 +1,4 @@
+import pandas
 import pprint
 import requests
 
@@ -82,5 +83,51 @@ def get_dash_content(audience, topics):
     return dash_content
 
 
+def get_local_avg_covid_data(county):
+    """
+    grabs rolling average covid data for the given county
+
+    param county: string, the US county to return data for (ie "District of Columbia")
+    return: csv data containing rolling averages for the given county in 2022 (see example output below)
+
+        ,date,geoid,county,state,cases,cases_avg,cases_avg_per_100k,deaths,deaths_avg,deaths_avg_per_100k
+        2928,2022-01-01,USA-11001,District of Columbia,District of Columbia,0,2103.0,297.98,0,0.4,0.06
+        6188,2022-01-02,USA-11001,District of Columbia,District of Columbia,0,2103.0,297.98,0,0.4,0.06
+        9448,2022-01-03,USA-11001,District of Columbia,District of Columbia,9201,2103.14,298.0,7,1.29,0.18
+        12708,2022-01-04,USA-11001,District of Columbia,District of Columbia,2006,2122.86,300.79,2,1.38,0.19
+        15968,2022-01-05,USA-11001,District of Columbia,District of Columbia,1326,2110.57,299.05,2,1.71,0.24
+        ...
+        325436,2022-04-10,USA-11001,District of Columbia,District of Columbia,0,143.57,20.34,0,0.29,0.04
+    """
+
+    avg_data = pandas.read_csv(
+        "https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-2022.csv",
+    )
+
+    avg_data = avg_data[avg_data["county"] == county]
+    return avg_data.to_csv()
+
+
+def get_local_live_covid_data(county):
+    """
+    grabs live covid data for the given county on the current day
+
+    param county: string, the US county to return data for (ie "District of Columbia")
+    return: csv data containing live for the given county today (see example output below)
+
+        ,date,county,state,fips,cases,deaths,confirmed_cases,confirmed_deaths,probable_cases,probable_deaths
+        322,2022-04-11,District of Columbia,District of Columbia,11001.0,137603,1331.0,134623.0,1319.0,2980.0,12.0
+    """
+
+    live_data = pandas.read_csv(
+        "https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv"
+    )
+
+    live_data = live_data[live_data["county"] == county]
+    return live_data.to_csv()
+
+
 if __name__ == "__main__":
-    get_dash_content("Washington DC", ["Things to Do", "Sports"])
+    print(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
+    print(get_local_avg_covid_data("District of Columbia"))
+    print(get_local_live_covid_data("District of Columbia"))
