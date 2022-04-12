@@ -3,9 +3,12 @@ import pandas
 import pendulum
 import pprint
 import requests
-import http.client, urllib.request, urllib.parse, urllib.error
 from google.transit import gtfs_realtime_pb2
+import urllib
+import http.client, urllib.request, urllib.parse, urllib.error, base64
+import json
 from google.protobuf.json_format import MessageToJson
+
 
 
 def sluggify(value):
@@ -109,7 +112,7 @@ def get_local_avg_covid_data(county):
     )
 
     avg_data = avg_data[avg_data["county"] == county]
-    return avg_data.to_csv()
+    return avg_data.to_csv('local_avg_covid_data.csv')
 
 
 def get_local_live_covid_data(county):
@@ -128,7 +131,7 @@ def get_local_live_covid_data(county):
     )
 
     live_data = live_data[live_data["county"] == county]
-    return live_data.to_csv()
+    return live_data.to_csv('local_covid_data.csv')
 
 
 def get_local_weather_data(zip):
@@ -266,152 +269,147 @@ def get_local_event_data(zip, radius):
 
     return events
 
-
 def get_metro_alert_data():
     """
-    grabs latest metro alerts such as stop moved, unforeseen events affecting a
+    grabs latest metro alerts such as stop moved, unforeseen events affecting a 
     station, route or the entire network
 
     return: json data with entity info (see example output below)
     {
-        'Incidents': [
-            {
-                'DateUpdated': '2022-04-11T04:42:52',
-                'DelaySeverity': None,
-                'Description': 'Trains will operate every 20 minutes w/6-car '
-                            'trains. Delays possible, plan additional '
-                            'travel time.',
-                'EmergencyText': None,
-                'EndLocationFullName': None,
-                'IncidentID': '1F15F226-8FCD-4806-901F-7A13DAFCF955',
-                'IncidentType': 'Alert',
-                'LinesAffected': 'GR; YL;',
-                'PassengerDelay': 0.0,
-                'StartLocationFullName': None
+      "entity": [
+        {
+          "id": "79ADE137-485E-4639-8497-C95BCADC075A",
+          "alert": {
+            "informedEntity": [
+              {
+                "routeId": "RED"
+              }
+            ],
+            "cause": "OTHER_CAUSE",
+            "effect": "MODIFIED_SERVICE",
+            "url": {
+              "translation": [
+                {
+                  "text": "http://metroalerts.info/m?id=185741",
+                  "language": "en-us"
+                }
+              ]
             },
-            {
-                'DateUpdated': '2022-04-11T04:42:09',
-                'DelaySeverity': None,
-                'Description': 'Trains will operate every 20 minutes w/6-car '
-                            'trains. Delays possible, plan additional '
-                            'travel time.',
-                'EmergencyText': None,
-                'EndLocationFullName': None,
-                'IncidentID': '56FEC0BD-09F7-489D-8B87-42FF20966D92',
-                'IncidentType': 'Alert',
-                'LinesAffected': 'BL; OR; SV;',
-                'PassengerDelay': 0.0,
-                'StartLocationFullName': None
+            "headerText": {
+              "translation": [
+                {
+                  "text": "Wheaton: Due to an escalator outage, Metrobus route Y8 operates btwn Glenmont, Wheaton and Forest Glen.",
+                  "language": "en-us"
+                }
+              ]
             },
-            {
-                'DateUpdated': '2022-04-11T04:41:22',
-                'DelaySeverity': None,
-                'Description': 'Trains will operate every 10 minutes w/6-car '
-                            'trains. Delays possible, plan additional '
-                            'travel time.',
-                'EmergencyText': None,
-                'EndLocationFullName': None,
-                'IncidentID': '0A4755D3-0A04-473E-B4E0-7BDBBF9FFB3B',
-                'IncidentType': 'Alert',
-                'LinesAffected': 'RD;',
-                'PassengerDelay': 0.0,
-                'StartLocationFullName': None
+            "descriptionText": {
+              "translation": [
+                {
+                  "text": "Wheaton: Due to an escalator outage, Metrobus route Y8 operates btwn Glenmont, Wheaton and Forest Glen.",
+                  "language": "en-us"
+                }
+              ]
             }
-        ]
-    }
+          }
+          ]
+        }
     """
-    headers = {
-        "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
-    }
+    headers = {'api_key': '3ee0597845df41f3a0d77a2668cf3e24',}
+    params = urllib.parse.urlencode({})
 
     try:
-        data = requests.get(
-            "https://api.wmata.com/Incidents.svc/json/Incidents", headers=headers
-        )
-        return data.json()
-
+        conn = http.client.HTTPSConnection('api.wmata.com')
+        conn.request("GET", "/gtfs/rail-gtfsrt-alerts.pb?%s" % params, "{body}", headers)
+        response = conn.getresponse()
+        data = response.read()
+        feedmessage = gtfs_realtime_pb2.FeedMessage()
+        feedmessage.ParseFromString(data)
+        alerts = gtfs_realtime_pb2.FeedMessage()
+    
+        for feedentity in feedmessage.entity:    
+            if feedentity.HasField('alert'):
+                e = alerts.entity.add()
+                e.CopyFrom(feedentity)
+    
+        with open('alerts.json', 'w') as a:
+            a.write(MessageToJson(alerts))
+    
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e))
-
-
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+    
 def get_metro_trip_update_data():
     """
     gets information about delays, cancellations, changed routes
 
     return: json data with entity info (see example output below)
     {
-        "entity": [{
-            "id": "0",
-            "tripUpdate": {
-                "trip": {
-                    "tripId": "4205056_19092",
-                    "startTime": "14:40:00",
-                    "startDate": "20220412",
-                    "scheduleRelationship": "SCHEDULED",
-                    "routeId": "RED",
-                    "directionId": 0
+      "entity": [
+        {
+          "id": "0",
+          "tripUpdate": {
+            "trip": {
+              "tripId": "4205056_19092",
+              "startTime": "14:40:00",
+              "startDate": "20220412",
+              "scheduleRelationship": "SCHEDULED",
+              "routeId": "RED",
+              "directionId": 0
+            },
+            "stopTimeUpdate": [
+              {
+                "stopSequence": 1,
+                "departure": {
+                  "time": "1649788833",
+                  "uncertainty": 0
                 },
-                "stopTimeUpdate": [
-                    {
-                        "stopSequence": 1,
-                        "departure": {
-                            "time": "1649788833",
-                            "uncertainty": 0
-                        },
-                        "stopId": "PF_A15_C",
-                        "scheduleRelationship": "SCHEDULED"
-                    },
-                    {
-                        "stopSequence": 2,
-                        "arrival": {
-                            "time": "1649789154",
-                            "uncertainty": 0
-                        },
-                        "stopId": "PF_A14_C",
-                        "scheduleRelationship": "SCHEDULED"
-                    },
-                    {
-                        "stopSequence": 3,
-                        "arrival": {
-                            "time": "1649789371",
-                            "uncertainty": 0
-                        },
-                        "stopId": "PF_A13_C",
-                        "scheduleRelationship": "SCHEDULED"
-                    },
-                ]
-            }
-        }]
-    }
-
+                "stopId": "PF_A15_C",
+                "scheduleRelationship": "SCHEDULED"
+              },
+              {
+                "stopSequence": 2,
+                "arrival": {
+                  "time": "1649789154",
+                  "uncertainty": 0
+                },
+                "stopId": "PF_A14_C",
+                "scheduleRelationship": "SCHEDULED"
+              },
+              {
+                "stopSequence": 3,
+                "arrival": {
+                  "time": "1649789371",
+                  "uncertainty": 0
+                },
+                "stopId": "PF_A13_C",
+                "scheduleRelationship": "SCHEDULED"
+              },
+    
     """
-
-    headers = {
-        "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
-    }
+    
+    headers = {'api_key': '3ee0597845df41f3a0d77a2668cf3e24',}
     params = urllib.parse.urlencode({})
 
     try:
-        conn = http.client.HTTPSConnection("api.wmata.com")
-        conn.request(
-            "GET", "/gtfs/rail-gtfsrt-tripupdates.pb?%s" % params, "{body}", headers
-        )
+        conn = http.client.HTTPSConnection('api.wmata.com')
+        conn.request("GET", "/gtfs/rail-gtfsrt-tripupdates.pb?%s" % params, "{body}", headers)
         response = conn.getresponse()
         data = response.read()
         feedmessage = gtfs_realtime_pb2.FeedMessage()
         feedmessage.ParseFromString(data)
         trip_updates = gtfs_realtime_pb2.FeedMessage()
-
+        
         for feedentity in feedmessage.entity:
-            if feedentity.HasField("trip_update"):
+            if feedentity.HasField('trip_update'):
                 e = trip_updates.entity.add()
                 e.CopyFrom(feedentity)
-
-        return MessageToJson(trip_updates)
-
+    
+        with open('trip_updates.json', 'w') as t:
+            t.write(MessageToJson(trip_updates))
+    
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
-
+    
 
 def get_metro_vehicles_position_data():
     """
@@ -419,110 +417,71 @@ def get_metro_vehicles_position_data():
 
     return: json data with entity info (see example output below)
     {
-      "entity": [{
-            "id": "0",
-            "isDeleted": false,
+      "entity": [
+        {
+          "id": "0",
+          "isDeleted": false,
+          "vehicle": {
+            "trip": {
+              "tripId": "4205179_19092",
+              "startTime": "14:20:00",
+              "startDate": "20220412",
+              "scheduleRelationship": "SCHEDULED",
+              "routeId": "RED",
+              "directionId": 0
+            },
+            "position": {
+              "latitude": 38.92471,
+              "longitude": -77.05227,
+              "bearing": 156.0
+            },
+            "currentStopSequence": 12,
+            "currentStatus": "INCOMING_AT",
+            "timestamp": "1649789705",
+            "stopId": "PF_A04_C",
             "vehicle": {
-                "trip": {
-                    "tripId": "4205179_19092",
-                    "startTime": "14:20:00",
-                    "startDate": "20220412",
-                    "scheduleRelationship": "SCHEDULED",
-                    "routeId": "RED",
-                    "directionId": 0
-                },
-                "position": {
-                    "latitude": 38.92471,
-                    "longitude": -77.05227,
-                    "bearing": 156.0
-                },
-                "currentStopSequence": 12,
-                "currentStatus": "INCOMING_AT",
-                "timestamp": "1649789705",
-                "stopId": "PF_A04_C",
-                "vehicle": {
-                    "id": "393",
-                    "label": "107",
-                    "licensePlate": "6"
-                },
-                "occupancyStatus": "MANY_SEATS_AVAILABLE"
-            }
-        }]
-    }
+              "id": "393",
+              "label": "107",
+              "licensePlate": "6"
+            },
+            "occupancyStatus": "MANY_SEATS_AVAILABLE"
+          }
+          ]
+        }
     """
-
-    headers = {
-        "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
-    }
+    
+    headers = {'api_key': '3ee0597845df41f3a0d77a2668cf3e24',}
     params = urllib.parse.urlencode({})
-
+        
     try:
-        conn = http.client.HTTPSConnection("api.wmata.com")
-        conn.request(
-            "GET",
-            "/gtfs/rail-gtfsrt-vehiclepositions.pb?%s" % params,
-            "{body}",
-            headers,
-        )
+        conn = http.client.HTTPSConnection('api.wmata.com')
+        conn.request("GET", "/gtfs/rail-gtfsrt-vehiclepositions.pb?%s" % params, "{body}", headers)
         response = conn.getresponse()
         data = response.read()
         feedmessage = gtfs_realtime_pb2.FeedMessage()
         feedmessage.ParseFromString(data)
         vehicles = gtfs_realtime_pb2.FeedMessage()
-
-        for feedentity in feedmessage.entity:
-            if feedentity.HasField("vehicle"):
+    
+        for feedentity in feedmessage.entity:    
+            if feedentity.HasField('vehicle'):
                 e = vehicles.entity.add()
                 e.CopyFrom(feedentity)
-
-        return MessageToJson(vehicles)
-
+    
+        with open('vehicles.json', 'w') as v:
+            v.write(MessageToJson(vehicles))
+    
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
-
-
-def get_bus_alert_data():
-    """
-    grabs bus alert data for the dc metro area
-
-    returns: json data with bus incident info for DC (see example output below)
-    {
-        'BusIncidents': [
-            {
-                'DateUpdated': '2022-04-12T16:36:33',
-                'Description': 'Due to emergency activity at MacArthur Blvd '
-                                '& Cathedral Ave NW, buses may experience '
-                                'possible delays and detours in both '
-                                'directions.',
-                'IncidentID': '801C22D8-79B6-4652-A8C7-9E52EA456C61',
-                'IncidentType': 'Alert',
-                'RoutesAffected': ['D6']
-            }
-        ]
-    }
-    """
-
-    headers = {
-        "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
-    }
-
-    try:
-        data = requests.get(
-            f"https://api.wmata.com/Incidents.svc/json/BusIncidents", headers=headers
-        )
-        return data.json()
-
-    except Exception as e:
-        print(f"[Errno {e.errno}] {e}")
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))    
 
 
 if __name__ == "__main__":
-    pprint.pprint(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
-    print(get_local_avg_covid_data("District of Columbia"))
-    print(get_local_live_covid_data("District of Columbia"))
-    pprint.pprint(get_local_weather_data("20001"))
-    pprint.pprint(get_local_event_data("20001", 50))
-    pprint.pprint(get_metro_alert_data())
-    pprint.pprint(get_metro_trip_update_data())
-    pprint.pprint(get_metro_vehicles_position_data())
-    pprint.pprint(get_bus_alert_data())
+    dash_content = get_dash_content("Washington DC", ["Things to Do", "Food and Drink"])
+    local_avg_covid = get_local_avg_covid_data("District of Columbia")
+    local_covid_data = get_local_live_covid_data("District of Columbia")
+    weather = get_local_weather_data("20001")
+    event = get_local_event_data("20001", 50)
+    metro_alerts = get_metro_alert_data()
+    metro_trip =  get_metro_trip_update_data()
+    metro_vehicles = get_metro_vehicles_position_data()
+   
+
