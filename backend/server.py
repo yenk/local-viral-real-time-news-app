@@ -276,61 +276,64 @@ def get_metro_alert_data():
 
     return: json data with entity info (see example output below)
     {
-        "entity": [{
-            "id": "79ADE137-485E-4639-8497-C95BCADC075A",
-            "alert": {
-                "informedEntity": [{
-                    "routeId": "RED"
-                }],
-                "cause": "OTHER_CAUSE",
-                "effect": "MODIFIED_SERVICE",
-                "url": {
-                    "translation": [{
-                        "text": "http://metroalerts.info/m?id=185741",
-                        "language": "en-us"
-                    }]
-                },
-                "headerText": {
-                    "translation": [{
-                        "text": "Wheaton: Due to an escalator outage, Metrobus route Y8 operates btwn Glenmont, Wheaton and Forest Glen.",
-                        "language": "en-us"
-                    }]
-                },
-                "descriptionText": {
-                    "translation": [{
-                        "text": "Wheaton: Due to an escalator outage, Metrobus route Y8 operates btwn Glenmont, Wheaton and Forest Glen.",
-                        "language": "en-us"
-                    }]
-                }
+        'Incidents': [
+            {
+                'DateUpdated': '2022-04-11T04:42:52',
+                'DelaySeverity': None,
+                'Description': 'Trains will operate every 20 minutes w/6-car '
+                            'trains. Delays possible, plan additional '
+                            'travel time.',
+                'EmergencyText': None,
+                'EndLocationFullName': None,
+                'IncidentID': '1F15F226-8FCD-4806-901F-7A13DAFCF955',
+                'IncidentType': 'Alert',
+                'LinesAffected': 'GR; YL;',
+                'PassengerDelay': 0.0,
+                'StartLocationFullName': None
+            },
+            {
+                'DateUpdated': '2022-04-11T04:42:09',
+                'DelaySeverity': None,
+                'Description': 'Trains will operate every 20 minutes w/6-car '
+                            'trains. Delays possible, plan additional '
+                            'travel time.',
+                'EmergencyText': None,
+                'EndLocationFullName': None,
+                'IncidentID': '56FEC0BD-09F7-489D-8B87-42FF20966D92',
+                'IncidentType': 'Alert',
+                'LinesAffected': 'BL; OR; SV;',
+                'PassengerDelay': 0.0,
+                'StartLocationFullName': None
+            },
+            {
+                'DateUpdated': '2022-04-11T04:41:22',
+                'DelaySeverity': None,
+                'Description': 'Trains will operate every 10 minutes w/6-car '
+                            'trains. Delays possible, plan additional '
+                            'travel time.',
+                'EmergencyText': None,
+                'EndLocationFullName': None,
+                'IncidentID': '0A4755D3-0A04-473E-B4E0-7BDBBF9FFB3B',
+                'IncidentType': 'Alert',
+                'LinesAffected': 'RD;',
+                'PassengerDelay': 0.0,
+                'StartLocationFullName': None
             }
-        }]
+        ]
     }
     """
     headers = {
         "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
     }
-    params = urllib.parse.urlencode({})
 
     try:
-        conn = http.client.HTTPSConnection("api.wmata.com")
-        conn.request(
-            "GET", "/gtfs/rail-gtfsrt-alerts.pb?%s" % params, "{body}", headers
+        data = requests.get(
+            "https://api.wmata.com/Incidents.svc/json/Incidents", headers=headers
         )
-        response = conn.getresponse()
-        data = response.read()
-        feedmessage = gtfs_realtime_pb2.FeedMessage()
-        feedmessage.ParseFromString(data)
-        alerts = gtfs_realtime_pb2.FeedMessage()
-
-        for feedentity in feedmessage.entity:
-            if feedentity.HasField("alert"):
-                e = alerts.entity.add()
-                e.CopyFrom(feedentity)
-
-        return MessageToJson(alerts)
+        return data.json()
 
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        print("[Errno {0}] {1}".format(e.errno, e))
 
 
 def get_metro_trip_update_data():
