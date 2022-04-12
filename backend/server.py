@@ -3,10 +3,8 @@ import pandas
 import pendulum
 import pprint
 import requests
+import http.client, urllib.request, urllib.parse, urllib.error
 from google.transit import gtfs_realtime_pb2
-import urllib
-import http.client, urllib.request, urllib.parse, urllib.error, base64
-import json
 from google.protobuf.json_format import MessageToJson
 
 
