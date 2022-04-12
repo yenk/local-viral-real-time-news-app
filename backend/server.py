@@ -3,6 +3,12 @@ import pandas
 import pendulum
 import pprint
 import requests
+from google.transit import gtfs_realtime_pb2
+import urllib
+import http.client, urllib.request, urllib.parse, urllib.error, base64
+import json
+from google.protobuf.json_format import MessageToJson
+
 
 
 def sluggify(value):
@@ -263,6 +269,210 @@ def get_local_event_data(zip, radius):
 
     return events
 
+def get_metro_alert_data():
+    """
+    grabs latest metro alerts such as stop moved, unforeseen events affecting a 
+    station, route or the entire network
+
+    return: json data with entity info (see example output below)
+    {
+      "entity": [
+        {
+          "id": "79ADE137-485E-4639-8497-C95BCADC075A",
+          "alert": {
+            "informedEntity": [
+              {
+                "routeId": "RED"
+              }
+            ],
+            "cause": "OTHER_CAUSE",
+            "effect": "MODIFIED_SERVICE",
+            "url": {
+              "translation": [
+                {
+                  "text": "http://metroalerts.info/m?id=185741",
+                  "language": "en-us"
+                }
+              ]
+            },
+            "headerText": {
+              "translation": [
+                {
+                  "text": "Wheaton: Due to an escalator outage, Metrobus route Y8 operates btwn Glenmont, Wheaton and Forest Glen.",
+                  "language": "en-us"
+                }
+              ]
+            },
+            "descriptionText": {
+              "translation": [
+                {
+                  "text": "Wheaton: Due to an escalator outage, Metrobus route Y8 operates btwn Glenmont, Wheaton and Forest Glen.",
+                  "language": "en-us"
+                }
+              ]
+            }
+          }
+          ]
+        }
+    """
+    headers = {'api_key': '3ee0597845df41f3a0d77a2668cf3e24',}
+    params = urllib.parse.urlencode({})
+
+    try:
+        conn = http.client.HTTPSConnection('api.wmata.com')
+        conn.request("GET", "/gtfs/rail-gtfsrt-alerts.pb?%s" % params, "{body}", headers)
+        response = conn.getresponse()
+        data = response.read()
+        feedmessage = gtfs_realtime_pb2.FeedMessage()
+        feedmessage.ParseFromString(data)
+        alerts = gtfs_realtime_pb2.FeedMessage()
+    
+        for feedentity in feedmessage.entity:    
+            if feedentity.HasField('alert'):
+                e = alerts.entity.add()
+                e.CopyFrom(feedentity)
+    
+        with open('alerts.json', 'w') as a:
+            a.write(MessageToJson(alerts))
+    
+    except Exception as e:
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+    
+def get_metro_trip_update_data():
+    """
+    gets information about delays, cancellations, changed routes
+
+    return: json data with entity info (see example output below)
+    {
+      "entity": [
+        {
+          "id": "0",
+          "tripUpdate": {
+            "trip": {
+              "tripId": "4205056_19092",
+              "startTime": "14:40:00",
+              "startDate": "20220412",
+              "scheduleRelationship": "SCHEDULED",
+              "routeId": "RED",
+              "directionId": 0
+            },
+            "stopTimeUpdate": [
+              {
+                "stopSequence": 1,
+                "departure": {
+                  "time": "1649788833",
+                  "uncertainty": 0
+                },
+                "stopId": "PF_A15_C",
+                "scheduleRelationship": "SCHEDULED"
+              },
+              {
+                "stopSequence": 2,
+                "arrival": {
+                  "time": "1649789154",
+                  "uncertainty": 0
+                },
+                "stopId": "PF_A14_C",
+                "scheduleRelationship": "SCHEDULED"
+              },
+              {
+                "stopSequence": 3,
+                "arrival": {
+                  "time": "1649789371",
+                  "uncertainty": 0
+                },
+                "stopId": "PF_A13_C",
+                "scheduleRelationship": "SCHEDULED"
+              },
+    
+    """
+    
+    headers = {'api_key': '3ee0597845df41f3a0d77a2668cf3e24',}
+    params = urllib.parse.urlencode({})
+
+    try:
+        conn = http.client.HTTPSConnection('api.wmata.com')
+        conn.request("GET", "/gtfs/rail-gtfsrt-tripupdates.pb?%s" % params, "{body}", headers)
+        response = conn.getresponse()
+        data = response.read()
+        feedmessage = gtfs_realtime_pb2.FeedMessage()
+        feedmessage.ParseFromString(data)
+        trip_updates = gtfs_realtime_pb2.FeedMessage()
+        
+        for feedentity in feedmessage.entity:
+            if feedentity.HasField('trip_update'):
+                e = trip_updates.entity.add()
+                e.CopyFrom(feedentity)
+    
+        with open('trip_updates.json', 'w') as t:
+            t.write(MessageToJson(trip_updates))
+    
+    except Exception as e:
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+    
+
+def get_metro_vehicles_position_data():
+    """
+    gets information about the vehicles including location and congestion level
+
+    return: json data with entity info (see example output below)
+    {
+      "entity": [
+        {
+          "id": "0",
+          "isDeleted": false,
+          "vehicle": {
+            "trip": {
+              "tripId": "4205179_19092",
+              "startTime": "14:20:00",
+              "startDate": "20220412",
+              "scheduleRelationship": "SCHEDULED",
+              "routeId": "RED",
+              "directionId": 0
+            },
+            "position": {
+              "latitude": 38.92471,
+              "longitude": -77.05227,
+              "bearing": 156.0
+            },
+            "currentStopSequence": 12,
+            "currentStatus": "INCOMING_AT",
+            "timestamp": "1649789705",
+            "stopId": "PF_A04_C",
+            "vehicle": {
+              "id": "393",
+              "label": "107",
+              "licensePlate": "6"
+            },
+            "occupancyStatus": "MANY_SEATS_AVAILABLE"
+          }
+          ]
+        }
+    """
+    
+    headers = {'api_key': '3ee0597845df41f3a0d77a2668cf3e24',}
+    params = urllib.parse.urlencode({})
+        
+    try:
+        conn = http.client.HTTPSConnection('api.wmata.com')
+        conn.request("GET", "/gtfs/rail-gtfsrt-vehiclepositions.pb?%s" % params, "{body}", headers)
+        response = conn.getresponse()
+        data = response.read()
+        feedmessage = gtfs_realtime_pb2.FeedMessage()
+        feedmessage.ParseFromString(data)
+        vehicles = gtfs_realtime_pb2.FeedMessage()
+    
+        for feedentity in feedmessage.entity:    
+            if feedentity.HasField('vehicle'):
+                e = vehicles.entity.add()
+                e.CopyFrom(feedentity)
+    
+        with open('vehicles.json', 'w') as v:
+            v.write(MessageToJson(vehicles))
+    
+    except Exception as e:
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))    
+
 
 if __name__ == "__main__":
     pprint.pprint(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
@@ -270,3 +480,7 @@ if __name__ == "__main__":
     print(get_local_live_covid_data("District of Columbia"))
     pprint.pprint(get_local_weather_data("20001"))
     pprint.pprint(get_local_event_data("20001", 50))
+    get_metro_alert_data()
+    get_metro_trip_update_data()
+    get_metro_vehicles_position_data()
+
