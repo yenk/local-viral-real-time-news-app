@@ -1,0 +1,1464 @@
+{
+  "header": {
+    "gtfsRealtimeVersion": "2.0",
+    "incrementality": "FULL_DATASET",
+    "timestamp": "1649784459"
+  },
+  "entity": [
+    {
+      "id": "0",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205154_19092",
+          "startTime": "13:00:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.948,
+          "longitude": -77.07929,
+          "bearing": 158.0
+        },
+        "currentStopSequence": 9,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_A07_C",
+        "vehicle": {
+          "id": "391",
+          "label": "116",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "1",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205232_19092",
+          "startTime": "13:10:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.992348,
+          "longitude": -77.096016,
+          "bearing": 171.0
+        },
+        "currentStopSequence": 6,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_A10_C",
+        "vehicle": {
+          "id": "399",
+          "label": "117",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "2",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205180_19092",
+          "startTime": "13:20:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 39.064423,
+          "longitude": -77.12331,
+          "bearing": 139.0
+        },
+        "currentStopSequence": 2,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_A14_C",
+        "vehicle": {
+          "id": "409",
+          "label": "101",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "3",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205044_19092",
+          "startTime": "12:50:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.90588,
+          "longitude": -77.041336,
+          "bearing": 156.0
+        },
+        "currentStopSequence": 13,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_A03_1",
+        "vehicle": {
+          "id": "432",
+          "label": "115",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "4",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205139_19092",
+          "startTime": "13:04:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.906635,
+          "longitude": -77.00338,
+          "bearing": 196.0
+        },
+        "currentStopSequence": 9,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_B35_C",
+        "vehicle": {
+          "id": "393",
+          "label": "107",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "5",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205063_19092",
+          "startTime": "13:24:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 39.039524,
+          "longitude": -77.05085,
+          "bearing": 166.0
+        },
+        "currentStopSequence": 1,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_B11_C",
+        "vehicle": {
+          "id": "404",
+          "label": "109",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "6",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205159_19092",
+          "startTime": "13:14:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.975998,
+          "longitude": -77.01819,
+          "bearing": 156.0
+        },
+        "currentStopSequence": 5,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_B07_C",
+        "vehicle": {
+          "id": "411",
+          "label": "108",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "7",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205060_19092",
+          "startTime": "12:54:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.908665,
+          "longitude": -77.04285,
+          "bearing": 335.0
+        },
+        "currentStopSequence": 14,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_A02_C",
+        "vehicle": {
+          "id": "433",
+          "label": "106",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "8",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205190_19092",
+          "startTime": "12:44:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.94891,
+          "longitude": -77.07961,
+          "bearing": 338.0
+        },
+        "currentStopSequence": 19,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_A07_C",
+        "vehicle": {
+          "id": "388",
+          "label": "105",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "9",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205249_19092",
+          "startTime": "12:34:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.99823,
+          "longitude": -77.096695,
+          "bearing": 355.0
+        },
+        "currentStopSequence": 22,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_A10_C",
+        "vehicle": {
+          "id": "440",
+          "label": "104",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "10",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205051_19092",
+          "startTime": "12:24:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 39.0901,
+          "longitude": -77.15056,
+          "bearing": 342.0
+        },
+        "currentStopSequence": 26,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_A14_C",
+        "vehicle": {
+          "id": "423",
+          "label": "103",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "11",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205148_19092",
+          "startTime": "12:40:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.898354,
+          "longitude": -77.0228,
+          "bearing": 90.0
+        },
+        "currentStopSequence": 16,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_B01_1",
+        "vehicle": {
+          "id": "385",
+          "label": "114",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "12",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205046_19092",
+          "startTime": "12:30:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.971806,
+          "longitude": -77.01573,
+          "bearing": 336.0
+        },
+        "currentStopSequence": 22,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_B06_C",
+        "vehicle": {
+          "id": "431",
+          "label": "113",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "13",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205164_19092",
+          "startTime": "12:20:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 39.01499,
+          "longitude": -77.04265,
+          "bearing": 347.0
+        },
+        "currentStopSequence": 25,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_B09_C",
+        "vehicle": {
+          "id": "428",
+          "label": "111",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "14",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4265286_19092",
+          "startTime": "13:04:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "SILVER",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.892048,
+          "longitude": -77.166756,
+          "bearing": 137.0
+        },
+        "currentStopSequence": 5,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_N01_C",
+        "vehicle": {
+          "id": "376",
+          "label": "601",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "15",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264749_19092",
+          "startTime": "12:44:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "SILVER",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.90132,
+          "longitude": -77.04047,
+          "bearing": 90.0
+        },
+        "currentStopSequence": 13,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_C03_1",
+        "vehicle": {
+          "id": "381",
+          "label": "608",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "16",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264758_19092",
+          "startTime": "13:14:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "BLUE",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.82258,
+          "longitude": -77.04733,
+          "bearing": 25.0
+        },
+        "currentStopSequence": 4,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_C12_C",
+        "vehicle": {
+          "id": "390",
+          "label": "402",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "17",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264792_19092",
+          "startTime": "12:54:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "BLUE",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.90132,
+          "longitude": -77.044075,
+          "bearing": 87.0
+        },
+        "currentStopSequence": 11,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_C04_C",
+        "vehicle": {
+          "id": "395",
+          "label": "401",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "18",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264750_19092",
+          "startTime": "13:24:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "SILVER",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.941856,
+          "longitude": -77.27796,
+          "bearing": 95.0
+        },
+        "currentStopSequence": 1,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_N06_C",
+        "vehicle": {
+          "id": "398",
+          "label": "602",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "EMPTY"
+      }
+    },
+    {
+      "id": "19",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264752_19092",
+          "startTime": "13:26:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "ORANGE",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.879944,
+          "longitude": -77.2408,
+          "bearing": 83.0
+        },
+        "currentStopSequence": 1,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_K08_C",
+        "vehicle": {
+          "id": "403",
+          "label": "905",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "20",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4265306_19092",
+          "startTime": "13:06:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "ORANGE",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.890488,
+          "longitude": -77.086174,
+          "bearing": 63.0
+        },
+        "currentStopSequence": 8,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_K01_C",
+        "vehicle": {
+          "id": "422",
+          "label": "903",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "21",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264777_19092",
+          "startTime": "13:15:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "ORANGE",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.897163,
+          "longitude": -76.96031,
+          "bearing": 280.0
+        },
+        "currentStopSequence": 5,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_D09_C",
+        "vehicle": {
+          "id": "378",
+          "label": "901",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "EMPTY"
+      }
+    },
+    {
+      "id": "22",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264755_19092",
+          "startTime": "13:22:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "SILVER",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.88677,
+          "longitude": -76.89794,
+          "bearing": 270.0
+        },
+        "currentStopSequence": 3,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_G03_C",
+        "vehicle": {
+          "id": "405",
+          "label": "606",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "23",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4265246_19092",
+          "startTime": "13:02:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "SILVER",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.888454,
+          "longitude": -77.02859,
+          "bearing": 346.0
+        },
+        "currentStopSequence": 12,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_D02_2",
+        "vehicle": {
+          "id": "420",
+          "label": "605",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "24",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264765_19092",
+          "startTime": "13:10:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "BLUE",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.88535,
+          "longitude": -76.97713,
+          "bearing": 180.0
+        },
+        "currentStopSequence": 6,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_D08_C",
+        "vehicle": {
+          "id": "427",
+          "label": "406",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "25",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264747_19092",
+          "startTime": "12:55:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "ORANGE",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.90136,
+          "longitude": -77.03344,
+          "bearing": 270.0
+        },
+        "currentStopSequence": 15,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_C02_2",
+        "vehicle": {
+          "id": "382",
+          "label": "907",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "26",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264760_19092",
+          "startTime": "12:50:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "BLUE",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.898373,
+          "longitude": -77.0708,
+          "bearing": 198.0
+        },
+        "currentStopSequence": 17,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_C04_C",
+        "vehicle": {
+          "id": "401",
+          "label": "405",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "27",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264785_19092",
+          "startTime": "13:08:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "YELLOW",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.927494,
+          "longitude": -77.032585,
+          "bearing": 176.0
+        },
+        "currentStopSequence": 7,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_E04_C",
+        "vehicle": {
+          "id": "402",
+          "label": "301",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "28",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264784_19092",
+          "startTime": "12:48:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "YELLOW",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.855247,
+          "longitude": -77.04487,
+          "bearing": 162.0
+        },
+        "currentStopSequence": 16,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_C09_2",
+        "vehicle": {
+          "id": "419",
+          "label": "306",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "29",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4265212_19092",
+          "startTime": "12:30:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "BLUE",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.80605,
+          "longitude": -77.0619,
+          "bearing": 229.0
+        },
+        "currentStopSequence": 25,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_C13_C",
+        "vehicle": {
+          "id": "461",
+          "label": "404",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "30",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4265183_19092",
+          "startTime": "12:28:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "YELLOW",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.80039,
+          "longitude": -77.07115,
+          "bearing": 223.0
+        },
+        "currentStopSequence": 20,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_C14_2",
+        "vehicle": {
+          "id": "406",
+          "label": "305",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "31",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264754_19092",
+          "startTime": "12:46:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "ORANGE",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.88502,
+          "longitude": -77.003265,
+          "bearing": 88.0
+        },
+        "currentStopSequence": 18,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_D05_C",
+        "vehicle": {
+          "id": "392",
+          "label": "904",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "32",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264763_19092",
+          "startTime": "13:20:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "GREEN",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.84468,
+          "longitude": -76.97012,
+          "bearing": 238.0
+        },
+        "currentStopSequence": 3,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_F09_C",
+        "vehicle": {
+          "id": "400",
+          "label": "502",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "33",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264783_19092",
+          "startTime": "13:10:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "YELLOW",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.87105,
+          "longitude": -77.044495,
+          "bearing": 89.0
+        },
+        "currentStopSequence": 8,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_C07_1",
+        "vehicle": {
+          "id": "463",
+          "label": "304",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "34",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264770_19092",
+          "startTime": "13:20:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "GREEN",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.96043,
+          "longitude": -76.96889,
+          "bearing": 172.0
+        },
+        "currentStopSequence": 3,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_E08_2",
+        "vehicle": {
+          "id": "408",
+          "label": "505",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "35",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264766_19092",
+          "startTime": "13:00:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "GREEN",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.914925,
+          "longitude": -77.021866,
+          "bearing": 355.0
+        },
+        "currentStopSequence": 13,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_E02_C",
+        "vehicle": {
+          "id": "464",
+          "label": "501",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "36",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264790_19092",
+          "startTime": "12:50:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "YELLOW",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.951675,
+          "longitude": -77.003174,
+          "bearing": 85.0
+        },
+        "currentStopSequence": 17,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_E06_C",
+        "vehicle": {
+          "id": "424",
+          "label": "303",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "37",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4265122_19092",
+          "startTime": "12:40:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "GREEN",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.978283,
+          "longitude": -76.928276,
+          "bearing": 17.0
+        },
+        "currentStopSequence": 20,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_E09_C",
+        "vehicle": {
+          "id": "380",
+          "label": "506",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "38",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264776_19092",
+          "startTime": "13:00:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "GREEN",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.889137,
+          "longitude": -77.02197,
+          "bearing": 180.0
+        },
+        "currentStopSequence": 12,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_F02_C",
+        "vehicle": {
+          "id": "396",
+          "label": "504",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "39",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4265140_19092",
+          "startTime": "12:40:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "GREEN",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.84932,
+          "longitude": -76.96284,
+          "bearing": 51.0
+        },
+        "currentStopSequence": 18,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_F08_C",
+        "vehicle": {
+          "id": "383",
+          "label": "503",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "40",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264769_19092",
+          "startTime": "12:34:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "BLUE",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.888756,
+          "longitude": -76.976974,
+          "bearing": 11.0
+        },
+        "currentStopSequence": 22,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_D08_C",
+        "vehicle": {
+          "id": "397",
+          "label": "408",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "41",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264748_19092",
+          "startTime": "12:24:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "SILVER",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.886665,
+          "longitude": -76.89778,
+          "bearing": 90.0
+        },
+        "currentStopSequence": 25,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_G02_C",
+        "vehicle": {
+          "id": "426",
+          "label": "607",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "42",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4265314_19092",
+          "startTime": "12:42:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "SILVER",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.88345,
+          "longitude": -77.103035,
+          "bearing": 242.0
+        },
+        "currentStopSequence": 21,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_K03_2",
+        "vehicle": {
+          "id": "418",
+          "label": "604",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "43",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264753_19092",
+          "startTime": "12:35:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "ORANGE",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.89218,
+          "longitude": -77.16684,
+          "bearing": 317.0
+        },
+        "currentStopSequence": 23,
+        "currentStatus": "IN_TRANSIT_TO",
+        "timestamp": "1649784459",
+        "stopId": "PF_K05_C",
+        "vehicle": {
+          "id": "412",
+          "label": "906",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "44",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264751_19092",
+          "startTime": "12:22:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "SILVER",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.931328,
+          "longitude": -77.24393,
+          "bearing": 322.0
+        },
+        "currentStopSequence": 27,
+        "currentStatus": "INCOMING_AT",
+        "timestamp": "1649784459",
+        "stopId": "PF_N04_C",
+        "vehicle": {
+          "id": "413",
+          "label": "603",
+          "licensePlate": "6"
+        },
+        "occupancyStatus": "MANY_SEATS_AVAILABLE"
+      }
+    },
+    {
+      "id": "45",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205052_19092",
+          "startTime": "13:30:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 39.119957,
+          "longitude": -77.164604,
+          "bearing": 148.0
+        },
+        "timestamp": "1649784459",
+        "vehicle": {
+          "id": "417",
+          "label": "102",
+          "licensePlate": "6"
+        }
+      }
+    },
+    {
+      "id": "46",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4205250_19092",
+          "startTime": "13:34:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "RED",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 39.06173,
+          "longitude": -77.0536,
+          "bearing": 136.0
+        },
+        "timestamp": "1649784459",
+        "vehicle": {
+          "id": "421",
+          "label": "110",
+          "licensePlate": "6"
+        }
+      }
+    },
+    {
+      "id": "47",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264761_19092",
+          "startTime": "13:34:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "BLUE",
+          "directionId": 0
+        },
+        "position": {
+          "latitude": 38.766033,
+          "longitude": -77.16897,
+          "bearing": 62.0
+        },
+        "timestamp": "1649784459",
+        "vehicle": {
+          "id": "416",
+          "label": "403",
+          "licensePlate": "6"
+        }
+      }
+    },
+    {
+      "id": "48",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4264838_19092",
+          "startTime": "13:30:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "BLUE",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.90163,
+          "longitude": -76.84329,
+          "bearing": 222.0
+        },
+        "timestamp": "1649784459",
+        "vehicle": {
+          "id": "384",
+          "label": "407",
+          "licensePlate": "6"
+        }
+      }
+    },
+    {
+      "id": "49",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4265282_19092",
+          "startTime": "13:35:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "ORANGE",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 38.94799,
+          "longitude": -76.87182,
+          "bearing": 222.0
+        },
+        "timestamp": "1649784459",
+        "vehicle": {
+          "id": "472",
+          "label": "902",
+          "licensePlate": "6"
+        }
+      }
+    },
+    {
+      "id": "50",
+      "isDeleted": false,
+      "vehicle": {
+        "trip": {
+          "tripId": "4265184_19092",
+          "startTime": "13:28:00",
+          "startDate": "20220412",
+          "scheduleRelationship": "SCHEDULED",
+          "routeId": "YELLOW",
+          "directionId": 1
+        },
+        "position": {
+          "latitude": 39.012012,
+          "longitude": -76.91046,
+          "bearing": 215.0
+        },
+        "timestamp": "1649784459",
+        "vehicle": {
+          "id": "414",
+          "label": "302",
+          "licensePlate": "6"
+        }
+      }
+    }
+  ]
+}
