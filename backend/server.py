@@ -490,6 +490,41 @@ def get_metro_vehicles_position_data():
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
 
+def get_bus_alert_data():
+    """
+    grabs bus alert data for the dc metro area
+
+    returns: json data with bus incident info for DC (see example output below)
+    {
+        'BusIncidents': [
+            {
+                'DateUpdated': '2022-04-12T16:36:33',
+                'Description': 'Due to emergency activity at MacArthur Blvd '
+                                '& Cathedral Ave NW, buses may experience '
+                                'possible delays and detours in both '
+                                'directions.',
+                'IncidentID': '801C22D8-79B6-4652-A8C7-9E52EA456C61',
+                'IncidentType': 'Alert',
+                'RoutesAffected': ['D6']
+            }
+        ]
+    }
+    """
+
+    headers = {
+        "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
+    }
+
+    try:
+        data = requests.get(
+            f"https://api.wmata.com/Incidents.svc/json/BusIncidents", headers=headers
+        )
+        return data.json()
+
+    except Exception as e:
+        print(f"[Errno {e.errno}] {e}")
+
+
 if __name__ == "__main__":
     pprint.pprint(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
     print(get_local_avg_covid_data("District of Columbia"))
@@ -499,3 +534,4 @@ if __name__ == "__main__":
     get_metro_alert_data()
     get_metro_trip_update_data()
     get_metro_vehicles_position_data()
+    pprint.pprint(get_bus_alert_data())
