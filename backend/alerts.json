@@ -1,9 +1,4 @@
 {
-  "header": {
-    "gtfsRealtimeVersion": "2.0",
-    "incrementality": "FULL_DATASET",
-    "timestamp": "1649784129"
-  },
   "entity": [
     {
       "id": "79ADE137-485E-4639-8497-C95BCADC075A",
