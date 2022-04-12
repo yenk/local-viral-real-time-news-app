@@ -1,35 +1,47 @@
-# Run this app with `python app.py` and
-# visit http://127.0.0.1:8050/ in your web browser.
-
-from dash import Dash, dcc, html
 import dash
 import dash_core_components as dcc
-import dash_bootstrap_components as dbc
 import dash_html_components as html
-import plotly.express as px
 import pandas as pd
 
-# Instantiate dash app
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY] ) 
+data = pd.read_csv("local_avg_covid_data.csv")
+data["date"] = pd.to_datetime(data["date"], format="%Y-%m-%d")
+data.sort_values("date", inplace=True)
 
-# Define the underlying flask app (Used by gunicorn webserver in Heroku production deployment)
-server = app.server 
+app = dash.Dash(__name__)
 
-# app = Dash(__name__)
+app.layout = html.Div(
+    children=[
+        html.H1(children="Average Daily Covid Cases in DC",),
+        html.P(
+            children="DC's daily average Covid cases"
+            "and deaths beginning January 2022 to current date",
+        ),
+        dcc.Graph(
+            figure={
+                "data": [
+                    {
+                        "x": data["date"],
+                        "y": data["cases_avg_per_100k"],
+                        "type": "lines",
+                    },
+                ],
+                "layout": {"title": "Average Daily Covid Cases in DC"},
+            },
+        ),
+        dcc.Graph(
+            figure={
+                "data": [
+                    {
+                        "x": data["date"],
+                        "y": data["deaths_avg"],
+                        "type": "lines",
+                    },
+                ],
+                "layout": {"title": "Average Daily Covid Deaths in DC"},
+            },
+        ),
+    ]
+)
 
-df = pd.read_csv('https://gist.githubusercontent.com/chriddyp/5d1ea79569ed194d432e56108a04d188/raw/a9f9e8076b837d541398e999dcbac2b2826a81f8/gdp-life-exp-2007.csv')
-
-fig = px.scatter(df, x="gdp per capita", y="life expectancy",
-                 size="population", color="continent", hover_name="country",
-                 log_x=True, size_max=60)
-
-app.layout = html.Div([
-    dcc.Graph(
-        id='life-exp-vs-gdp',
-        figure=fig
-    )
-])
-
-# Run flask app
 if __name__ == "__main__":
-    app.run_server(debug=False, host='0.0.0.0', port=8050)
+    app.run_server(debug=True)
