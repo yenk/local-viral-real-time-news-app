@@ -12,15 +12,10 @@
     <div class="heading">
         <img src="./static/dc_heading.png" width="1200">
     </div>
-    <div class="stat-heading" >
-    <img src="./static/today.png">
+    <div class="stat-heading">
+        <img src="./static/today.png">
     </div>
     <div class="main">
-
-        <!-- <h1>Hello, {{ me }} <br>
-            hack here
-        </h1> -->
-       
         <div class="stats-whole"><img src="/static/covid.png"></div>
         <div>
             <div class="stats-half"><img src="/static/transport.png"></div>
@@ -30,8 +25,12 @@
         <div class="stats-whole"><img src="/static/weekend.png"></div>
 
         <div>
-            <div class="stats-half"><img src="/static/todo.png"></div>
-            <div class="stats-half"><img src="/static/food.png"></div>
+            <div class="stats-half"><img src="/static/todo.png">
+                <h1>{{ dash_content['Things to Do'][0].headline }}</h1>
+            </div>
+            <div class="stats-half"><img src="/static/food.png">
+                <h1>{{ dash_content['Food and Drink'][0].headline }}</h1>
+            </div>
         </div>
     </div>
 
@@ -120,7 +119,7 @@
         .heading {
             background-color: #E4EFFB;
         }
-        
+
         .stat-heading {
             background-color: #ffffff;
             margin-left: auto;
@@ -129,7 +128,8 @@
             margin-top: 10px;
 
         }
-        .stat-heading img{
+
+        .stat-heading img {
             height: 50px;
             margin-left: 0px;
         }
