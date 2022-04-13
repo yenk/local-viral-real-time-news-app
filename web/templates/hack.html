@@ -16,13 +16,7 @@
         <img src="./static/today.png">
     </div>
     <div class="main">
-
-
-
-        <div class="stats-whole"><img src="/static/covid.png">
-    
-                bus alert
-        </div>
+        <div class="stats-whole"><img src="/static/covid.png"></div>
         <div>
             <div class="stats-half"><img src="/static/transport.png"></div>
             <div class="stats-half"><img src="/static/weather.png"></div>
@@ -31,8 +25,12 @@
         <div class="stats-whole"><img src="/static/weekend.png"></div>
 
         <div>
-            <div class="stats-half"><img src="/static/todo.png"></div>
-            <div class="stats-half"><img src="/static/food.png"></div>
+            <div class="stats-half"><img src="/static/todo.png">
+                <h1>{{ dash_content['Things to Do'][0].headline }}</h1>
+            </div>
+            <div class="stats-half"><img src="/static/food.png">
+                <h1>{{ dash_content['Food and Drink'][0].headline }}</h1>
+            </div>
         </div>
     </div>
 
@@ -175,8 +173,12 @@
             margin-left: auto;
             margin-right: auto;
         }
-        @font-face {font-family: "NB International"; src: url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.eot"); src: url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.woff") format("woff"), url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.svg#NB International") format("svg"); }
-       
+
+        @font-face {
+            font-family: "NB International";
+            src: url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.eot");
+            src: url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.woff") format("woff"), url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/23255fa3ff7a89589800cea3092f154f.svg#NB International") format("svg");
+        }
     </style>
 </body>
 
