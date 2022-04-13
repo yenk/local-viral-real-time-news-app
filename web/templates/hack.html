@@ -22,14 +22,22 @@
             <div class="stats-half"><img src="/static/weather.png"></div>
         </div>
 
-        <div class="stats-whole"><img src="/static/weekend.png"></div>
-
+        <div class="stats-whole">
+            <img src="/static/weekend.png">
+            <h2>{{events|length}} fun things</h1>
+                {%for event in events%}
+                <a href={{ event.url }}>
+                    <p>{{ event.name }}</p>
+                </a>
+                <p>{{ event.start }}</p>
+                {%endfor%}
+        </div>
         <div>
             <div class="stats-half"><img src="/static/todo.png">
-                <h1>{{ dash_content['Things to Do'][0].headline }}</h1>
+                <h2>{{ dash_content['Things to Do'][0].headline }}</h1>
             </div>
             <div class="stats-half"><img src="/static/food.png">
-                <h1>{{ dash_content['Food and Drink'][0].headline }}</h1>
+                <h2>{{ dash_content['Food and Drink'][0].headline }}</h1>
             </div>
         </div>
     </div>
