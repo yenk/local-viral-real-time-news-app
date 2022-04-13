@@ -64,10 +64,18 @@
         </div>
         <div>
             <div class="stats-half"><img src="/static/todo.png">
-                <h2>{{ dash_content['Things to Do'][0].headline }}</h2>
+                {%set permalink = dash_content['Things to Do'][0].permalink%}
+                <a href={{ permalink }}>
+                    <h2>{{ dash_content['Things to Do'][0].headline }}</h2>
+                </a>
+                <p>{{ dash_content['Things to Do'][0].published }}</p>
             </div>
             <div class="stats-half"><img src="/static/food.png">
-                <h2>{{ dash_content['Food and Drink'][0].headline }}</h2>
+                {%set permalink = dash_content['Food and Drink'][0].permalink%}
+                <a href={{ permalink }}>
+                    <h2>{{ dash_content['Food and Drink'][0].headline }}</h2>
+                </a>
+                <p>{{ dash_content['Food and Drink'][0].published }}</p>
             </div>
         </div>
     </div>
