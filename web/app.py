@@ -1,18 +1,10 @@
-from flask import Flask, render_template
-from dash import Dash, html
+from flask import Flask, render_template, redirect, url_for, request, flash
 
 app = Flask(__name__)
-myDashBoard = html.Div([
-    html.H1('Hello Dash'),
-    html.Div([
-        html.P('Dash converts Python classes into HTML'),
-        html.P("This conversion happens behind the scenes by Dash's JavaScript front-end")
-    ])
-])
 
-@app.route('/test')
+@app.route('/')
 def index():
-  return render_template('hack.html', myDashBoard)
+  return render_template('hack.html', me="lizna")
 
 if __name__ == '__main__':
   app.run(debug=True)

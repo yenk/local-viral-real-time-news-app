@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0052)file:///Users/liznarahman/workspace/Hack22/hack.html -->
 <html>
 
 <head>
@@ -13,12 +12,33 @@
     <div class="heading">
         <img src="./static/dc_heading.png" width="1200">
     </div>
-    <div class="main">
-        {{ myDashBoard }}
+    <div class="stat-heading" >
+    <img src="./static/today.png">
     </div>
-    <div class="container">
+    <div class="main">
 
+        <!-- <h1>Hello, {{ me }} <br>
+            hack here
+        </h1> -->
+       
+        <div class="stats-whole"><img src="/static/covid.png"></div>
+        <div>
+            <div class="stats-half"><img src="/static/transport.png"></div>
+            <div class="stats-half"><img src="/static/weather.png"></div>
+        </div>
+
+        <div class="stats-whole"><img src="/static/weekend.png"></div>
+
+        <div>
+            <div class="stats-half"><img src="/static/todo.png"></div>
+            <div class="stats-half"><img src="/static/food.png"></div>
+        </div>
+    </div>
+
+
+    <div class="container">
         <div class="big" width="80%">
+            <img src="/static/topStories.png" width="800"><br>
             <div class="articles">
 
             </div>
@@ -40,16 +60,29 @@
 
     <style>
         .main {
-            width: 1000px;
+            width: 1233px;
             height: 300px;
             display: block;
             margin-left: auto;
             margin-right: auto;
             margin-bottom: 25px;
-            margin-top: 50px;
-            background-color: #ffffff;
+            margin-top: 10px;
+        }
+
+        .main div {
+            display: inline-block;
+            width: 285px;
+            float: left;
+            border-radius: 5px;
+
+        }
+
+        .main img {
+            display: block;
             border: 1px, black;
-            border-style: solid;
+            width: 265px;
+            float: left;
+            margin-top: 10px;
         }
 
         .nav {
@@ -63,8 +96,42 @@
             width: 100%;
         }
 
+        .stats-whole {
+            display: inline-block;
+            height: 310px;
+            margin-right: 20px;
+            margin-left: 20px;
+            margin-top: 0px;
+            border: 1px solid rgb(179, 179, 179);
+
+        }
+
+        .stats-half {
+            display: block;
+            height: 143px;
+            margin-right: 20px;
+            margin-left: 0px;
+            margin-top: 0px;
+            margin-bottom: 20px;
+            border: 1px solid rgb(179, 179, 179);
+        }
+
+
         .heading {
             background-color: #E4EFFB;
+        }
+        
+        .stat-heading {
+            background-color: #ffffff;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1200px;
+            margin-top: 10px;
+
+        }
+        .stat-heading img{
+            height: 50px;
+            margin-left: 0px;
         }
 
         .container {
@@ -80,6 +147,7 @@
         .small img {
             margin-left: 20px;
             margin-right: auto;
+            padding-top: 20px;
         }
 
         .big {
@@ -91,11 +159,8 @@
 
         .big img {
             margin-left: auto;
-            margin-right: 25px;
+            margin-right: 50px;
         }
-
-
-
 
         .articles {
             background-color: #ffffff;
