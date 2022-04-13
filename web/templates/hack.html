@@ -18,7 +18,28 @@
     <div class="main">
         <div class="stats-whole"><img src="/static/covid.png"></div>
         <div>
-            <div class="stats-half"><img src="/static/transport.png"></div>
+            <div class="stats-half">
+                <img src="/static/transport.png">
+                <p>{{ bus_data.BusIncidents|length }} bus alerts</p>
+                {%if bus_data.BusIncidents|length >= 1%}
+                <p>
+                    {{ bus_data.total_routes_affected }} routes affected:
+                    {%for route in bus_data.all_routes%}
+                    {{ route }} 
+                    {%endfor%}
+                </p>
+                {%endif%}
+
+                <p>{{ metro_data.Incidents|length }} train alerts</p>
+                {%if metro_data.Incidents|length >= 1%}
+                <p>
+                    {{ metro_data.total_lines_affected }} lines affected:
+                    {%for line in metro_data.all_lines%}
+                    {{ line }} 
+                    {%endfor%}
+                </p>
+                {%endif%}
+            </div>
             <div class="stats-half">
                 <img src="/static/weather.png">
                 <p>
@@ -33,7 +54,7 @@
 
         <div class="stats-whole">
             <img src="/static/weekend.png">
-            <h2>{{events|length}} fun things</h2>
+            <h2>{{ events|length }} fun things</h2>
             {%for event in events%}
             <a href={{ event.url }}>
                 <p>{{ event.name }}</p>
