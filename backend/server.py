@@ -10,7 +10,6 @@ import json
 from google.protobuf.json_format import MessageToJson
 
 
-
 def sluggify(value):
     return value.replace(" ", "-").lower()
 
@@ -112,7 +111,7 @@ def get_local_avg_covid_data(county):
     )
 
     avg_data = avg_data[avg_data["county"] == county]
-    return avg_data.to_csv('local_avg_covid_data.csv')
+    return avg_data.to_csv("local_avg_covid_data.csv")
 
 
 def get_local_live_covid_data(county):
@@ -131,7 +130,7 @@ def get_local_live_covid_data(county):
     )
 
     live_data = live_data[live_data["county"] == county]
-    return live_data.to_csv('local_covid_data.csv')
+    return live_data.to_csv("local_covid_data.csv")
 
 
 def get_local_weather_data(zip):
@@ -184,7 +183,7 @@ def get_local_weather_data(zip):
     lon = resp.json().get("lon")
 
     weather_data = requests.get(
-        f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}"
+        f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=Imperial"
     ).json()
 
     return weather_data
@@ -269,9 +268,10 @@ def get_local_event_data(zip, radius):
 
     return events
 
+
 def get_metro_alert_data():
     """
-    grabs latest metro alerts such as stop moved, unforeseen events affecting a 
+    grabs latest metro alerts such as stop moved, unforeseen events affecting a
     station, route or the entire network
 
     return: json data with entity info (see example output below)
@@ -315,29 +315,34 @@ def get_metro_alert_data():
           ]
         }
     """
-    headers = {'api_key': '3ee0597845df41f3a0d77a2668cf3e24',}
+    headers = {
+        "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
+    }
     params = urllib.parse.urlencode({})
 
     try:
-        conn = http.client.HTTPSConnection('api.wmata.com')
-        conn.request("GET", "/gtfs/rail-gtfsrt-alerts.pb?%s" % params, "{body}", headers)
+        conn = http.client.HTTPSConnection("api.wmata.com")
+        conn.request(
+            "GET", "/gtfs/rail-gtfsrt-alerts.pb?%s" % params, "{body}", headers
+        )
         response = conn.getresponse()
         data = response.read()
         feedmessage = gtfs_realtime_pb2.FeedMessage()
         feedmessage.ParseFromString(data)
         alerts = gtfs_realtime_pb2.FeedMessage()
-    
-        for feedentity in feedmessage.entity:    
-            if feedentity.HasField('alert'):
+
+        for feedentity in feedmessage.entity:
+            if feedentity.HasField("alert"):
                 e = alerts.entity.add()
                 e.CopyFrom(feedentity)
-    
-        with open('alerts.json', 'w') as a:
+
+        with open("alerts.json", "w") as a:
             a.write(MessageToJson(alerts))
-    
+
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
-    
+
+
 def get_metro_trip_update_data():
     """
     gets information about delays, cancellations, changed routes
@@ -384,32 +389,36 @@ def get_metro_trip_update_data():
                 "stopId": "PF_A13_C",
                 "scheduleRelationship": "SCHEDULED"
               },
-    
+
     """
-    
-    headers = {'api_key': '3ee0597845df41f3a0d77a2668cf3e24',}
+
+    headers = {
+        "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
+    }
     params = urllib.parse.urlencode({})
 
     try:
-        conn = http.client.HTTPSConnection('api.wmata.com')
-        conn.request("GET", "/gtfs/rail-gtfsrt-tripupdates.pb?%s" % params, "{body}", headers)
+        conn = http.client.HTTPSConnection("api.wmata.com")
+        conn.request(
+            "GET", "/gtfs/rail-gtfsrt-tripupdates.pb?%s" % params, "{body}", headers
+        )
         response = conn.getresponse()
         data = response.read()
         feedmessage = gtfs_realtime_pb2.FeedMessage()
         feedmessage.ParseFromString(data)
         trip_updates = gtfs_realtime_pb2.FeedMessage()
-        
+
         for feedentity in feedmessage.entity:
-            if feedentity.HasField('trip_update'):
+            if feedentity.HasField("trip_update"):
                 e = trip_updates.entity.add()
                 e.CopyFrom(feedentity)
-    
-        with open('trip_updates.json', 'w') as t:
+
+        with open("trip_updates.json", "w") as t:
             t.write(MessageToJson(trip_updates))
-    
+
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
-    
+
 
 def get_metro_vehicles_position_data():
     """
@@ -449,29 +458,36 @@ def get_metro_vehicles_position_data():
           ]
         }
     """
-    
-    headers = {'api_key': '3ee0597845df41f3a0d77a2668cf3e24',}
+
+    headers = {
+        "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
+    }
     params = urllib.parse.urlencode({})
-        
+
     try:
-        conn = http.client.HTTPSConnection('api.wmata.com')
-        conn.request("GET", "/gtfs/rail-gtfsrt-vehiclepositions.pb?%s" % params, "{body}", headers)
+        conn = http.client.HTTPSConnection("api.wmata.com")
+        conn.request(
+            "GET",
+            "/gtfs/rail-gtfsrt-vehiclepositions.pb?%s" % params,
+            "{body}",
+            headers,
+        )
         response = conn.getresponse()
         data = response.read()
         feedmessage = gtfs_realtime_pb2.FeedMessage()
         feedmessage.ParseFromString(data)
         vehicles = gtfs_realtime_pb2.FeedMessage()
-    
-        for feedentity in feedmessage.entity:    
-            if feedentity.HasField('vehicle'):
+
+        for feedentity in feedmessage.entity:
+            if feedentity.HasField("vehicle"):
                 e = vehicles.entity.add()
                 e.CopyFrom(feedentity)
-    
-        with open('vehicles.json', 'w') as v:
+
+        with open("vehicles.json", "w") as v:
             v.write(MessageToJson(vehicles))
-    
+
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))    
+        print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
 
 if __name__ == "__main__":
@@ -481,7 +497,5 @@ if __name__ == "__main__":
     weather = get_local_weather_data("20001")
     event = get_local_event_data("20001", 50)
     metro_alerts = get_metro_alert_data()
-    metro_trip =  get_metro_trip_update_data()
+    metro_trip = get_metro_trip_update_data()
     metro_vehicles = get_metro_vehicles_position_data()
-   
-

@@ -10,10 +10,9 @@ def index():
         "Washington DC", ["Things to Do", "Food and Drink"]
     )
     events = server.get_local_event_data("20001", 50)
+    weather = server.get_local_weather_data("20001")
     return render_template(
-        "hack.html",
-        dash_content=dash_content,
-        events=events["events"],
+        "hack.html", dash_content=dash_content, events=events["events"], weather=weather
     )
 
 

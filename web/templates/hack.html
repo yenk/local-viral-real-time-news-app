@@ -19,25 +19,34 @@
         <div class="stats-whole"><img src="/static/covid.png"></div>
         <div>
             <div class="stats-half"><img src="/static/transport.png"></div>
-            <div class="stats-half"><img src="/static/weather.png"></div>
+            <div class="stats-half">
+                <img src="/static/weather.png">
+                <p>
+                    {{ weather.main.temp|int|round }}&#176; {{ weather.weather[0].main }}
+                </p>
+                <p>
+                    Temperature <br> H - {{ weather.main.temp_max|int|round }} L - {{ weather.main.temp_min|int|round }}
+                </p>
+                <p>Air Quality</p>
+            </div>
         </div>
 
         <div class="stats-whole">
             <img src="/static/weekend.png">
-            <h2>{{events|length}} fun things</h1>
-                {%for event in events%}
-                <a href={{ event.url }}>
-                    <p>{{ event.name }}</p>
-                </a>
-                <p>{{ event.start }}</p>
-                {%endfor%}
+            <h2>{{events|length}} fun things</h2>
+            {%for event in events%}
+            <a href={{ event.url }}>
+                <p>{{ event.name }}</p>
+            </a>
+            <p>{{ event.start }}</p>
+            {%endfor%}
         </div>
         <div>
             <div class="stats-half"><img src="/static/todo.png">
-                <h2>{{ dash_content['Things to Do'][0].headline }}</h1>
+                <h2>{{ dash_content['Things to Do'][0].headline }}</h2>
             </div>
             <div class="stats-half"><img src="/static/food.png">
-                <h2>{{ dash_content['Food and Drink'][0].headline }}</h1>
+                <h2>{{ dash_content['Food and Drink'][0].headline }}</h2>
             </div>
         </div>
     </div>
