@@ -8,6 +8,7 @@ import urllib
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 import json
 from google.protobuf.json_format import MessageToJson
+from pandas import json_normalize
 
 
 
@@ -326,17 +327,26 @@ def get_metro_alert_data():
         feedmessage = gtfs_realtime_pb2.FeedMessage()
         feedmessage.ParseFromString(data)
         alerts = gtfs_realtime_pb2.FeedMessage()
-    
+
         for feedentity in feedmessage.entity:    
             if feedentity.HasField('alert'):
                 e = alerts.entity.add()
                 e.CopyFrom(feedentity)
-    
+
         with open('alerts.json', 'w') as a:
-            a.write(MessageToJson(alerts))
-    
+            message = a.write(MessageToJson(alerts))
+        
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
+
+    # open json and unnest 
+    with open('alerts.json') as data: 
+        data = json.load(data)
+        output = pd.json_normalize(data, max_level=1, 
+            meta=['alert', 'informedEntity','cause', 'effect', 'headertext'])
+        output = output.to_csv('alerts.csv')
+    return output
+    
     
 def get_metro_trip_update_data():
     """
@@ -492,7 +502,7 @@ if __name__ == "__main__":
     weather = get_local_weather_data("20001")
     event = get_local_event_data("20001", 50)
     metro_alerts = get_metro_alert_data()
-    metro_trip =  get_metro_trip_update_data()
-    metro_vehicles = get_metro_vehicles_position_data()
+    # metro_trip =  get_metro_trip_update_data()
+    # metro_vehicles = get_metro_vehicles_position_data()
    
 
