@@ -1,5 +1,5 @@
 import datetime
-import pandas
+import pandas as pd
 import pendulum
 import pprint
 import requests
@@ -107,7 +107,7 @@ def get_local_avg_covid_data(county):
         325436,2022-04-10,USA-11001,District of Columbia,District of Columbia,0,143.57,20.34,0,0.29,0.04
     """
 
-    avg_data = pandas.read_csv(
+    avg_data = pd.read_csv(
         "https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-2022.csv",
     )
 
@@ -126,7 +126,7 @@ def get_local_live_covid_data(county):
         322,2022-04-11,District of Columbia,District of Columbia,11001.0,137603,1331.0,134623.0,1319.0,2980.0,12.0
     """
 
-    live_data = pandas.read_csv(
+    live_data = pd.read_csv(
         "https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv"
     )
 
@@ -409,6 +409,10 @@ def get_metro_trip_update_data():
     
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
+
+    df = pd.read_json('trip_updates.json')
+    df.to_csv('trip_updates.csv')
+    return df
     
 
 def get_metro_vehicles_position_data():
@@ -466,12 +470,19 @@ def get_metro_vehicles_position_data():
             if feedentity.HasField('vehicle'):
                 e = vehicles.entity.add()
                 e.CopyFrom(feedentity)
+
+
     
         with open('vehicles.json', 'w') as v:
             v.write(MessageToJson(vehicles))
     
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))    
+        print("[Errno {0}] {1}".format(e.errno, e.strerror)) 
+
+    df = pd.read_json('vehicles.json')
+    df.to_csv('vehicles.csv')
+    return df 
+       
 
 
 if __name__ == "__main__":
