@@ -25,47 +25,62 @@
         <div>
             <div class="stats-half">
                 <img src="/static/transport.png">
-                <p>{{ bus_data.BusIncidents|length }} bus alerts</p>
-                {%if bus_data.BusIncidents|length >= 1%}
-                <p>
-                    {{ bus_data.total_routes_affected }} routes affected:
+                <div class="scrollable-half">
+                    <h3>
+                        <p class="red">{{ bus_data.BusIncidents|length }} </p>bus alerts
+                    </h3>
+                    {%if bus_data.BusIncidents|length >= 1%}
+                    <p class="transport">
+                    <p class="transport-link">{{ bus_data.total_routes_affected }} routes </p>affected:
                     {%for route in bus_data.all_routes%}
                     {{ route }}
                     {%endfor%}
-                </p>
-                {%endif%}
-
-                <p>{{ metro_data.Incidents|length }} train alerts</p>
-                {%if metro_data.Incidents|length >= 1%}
-                <p>
-                    {{ metro_data.total_lines_affected }} lines affected:
+                    {%endif%}
+                    </p>
+                    <h3>
+                        <p class="red">{{ metro_data.Incidents|length }} </p>train alerts
+                    </h3>
+                    {%if metro_data.Incidents|length >= 1%}
+                    <p class="transport">
+                    <p class="transport-link">{{ metro_data.total_lines_affected }} lines </p>affected:
                     {%for line in metro_data.all_lines%}
                     {{ line }}
                     {%endfor%}
-                </p>
-                {%endif%}
+                    </p>
+                    {%endif%}
+                </div>
             </div>
             <div class="stats-half">
                 <img src="/static/weather.png">
-                <p>
-                    {{ weather.main.temp|int|round }}&#176; {{ weather.weather[0].main }}
-                </p>
-                <p>
-                    Temperature <br> H - {{ weather.main.temp_max|int|round }} L - {{ weather.main.temp_min|int|round }}
-                </p>
-                <p>Humidity <br> {{ weather.main.humidity }}%</p>
+                <div class="scrollable-half">
+
+                    <h3>
+                        <p class="brown">{{ weather.main.temp|int|round }}&#176; </p>{{ weather.weather[0].main }}
+                    </h3>
+                    <p>
+                        Temperature <br> H - {{ weather.main.temp_max|int|round }} L - {{
+                        weather.main.temp_min|int|round }}
+                    </p>
+                    <p>Humidity <br> {{ weather.main.humidity }}%</p>
+                </div>
             </div>
         </div>
 
         <div class="stats-whole">
-            <img src="/static/weekend.png">
-            <h2>{{ events|length }} fun things</h2>
-            {%for event in events%}
-            <a href={{ event.url }}>
-                <p>{{ event.name }}</p>
-            </a>
-            <p>{{ event.start }}</p>
-            {%endfor%}
+            <img src="/static/weekend.png"><br>
+            <h3>
+                <p class="green">{{ events|length }}</p> fun things
+            </h3>
+            <div class="scrollable-whole">
+
+                {%for event in events%}
+                <a href={{ event.url }}>
+                    <p>{{ event.name }}</p>
+                </a>
+                <p class="date-time">{{ event.start }}</p>
+                {%endfor%}
+            </div>
+
         </div>
         <div>
             <div class="stats-half"><img src="/static/todo.png">
@@ -111,7 +126,7 @@
     <style>
         .main {
             width: 1255px;
-            height: 300px;
+            height: 350x;
             display: block;
             margin-left: auto;
             margin-right: auto;
@@ -132,7 +147,8 @@
             display: block;
             width: 265px;
             float: left;
-            margin-top: 5px;
+            margin-top: 10px;
+            margin-bottom: 5px;
         }
 
         .dash-content {
@@ -140,20 +156,42 @@
         }
 
         .date-time {
-            font-size: 12px;
+            font-size: 15px;
             color: rgb(143, 143, 143);
+            margin-top: 7px;
         }
 
-        a:link {
-            text-decoration: none;
-            color: black;
-            font-size: 20px;
+        .transport {
+            font-size: 15px;
+            color: rgb(44, 44, 44);
+            margin-top: 7px;
         }
 
-        a:visited {
+        .main h3 {
+            display: inline-block;
+            margin: 0px;
+        }
+
+        .main p {
+            margin-bottom: 0px;
+        }
+
+        .scrollable-whole {
+            overflow: scroll;
+            height: 250px;
+        }
+
+        .scrollable-half {
+            overflow: scroll;
+            height: 110px;
+        }
+
+
+        a {
             text-decoration: none;
             color: black;
-            font-size: 20px;
+            font-size: 18px;
+            font-weight: lighter;
         }
 
         a:hover {
@@ -164,6 +202,55 @@
             text-decoration: underline;
         }
 
+        .stats-whole {
+            display: inline-block;
+            height: 328px;
+            margin-right: 20px;
+            margin-left: 20px;
+            margin-top: 0px;
+            border: 1px solid rgb(179, 179, 179);
+            margin-top: 5px;
+            padding-left: 10px;
+        }
+
+        .stats-half {
+            display: block;
+            height: 155px;
+            margin-right: 20px;
+            margin-left: 0px;
+            margin-top: 0px;
+            margin-bottom: 10px;
+            border: 1px solid rgb(179, 179, 179);
+            margin-top: 5px;
+            padding-left: 10px;
+        }
+
+        .green {
+            color: #326C5C;
+            font-size: 25px;
+            display: inline;
+        }
+
+        .red {
+            color: #FA4F3B;
+            font-size: 25px;
+            display: inline;
+        }
+
+        .brown {
+            color: #AB7D36;
+            font-size: 25px;
+            display: inline;
+        }
+
+        .transport-link {
+            color: blue;
+            text-decoration: underline;
+            display: inline;
+        }
+
+        /* -------------------- End of main dash styling ---------------- */
+
         .nav {
             background-color: #E4EFFB;
             display: flex;
@@ -173,35 +260,6 @@
             left: 0;
             z-index: 999;
             width: 100%;
-        }
-
-        .stats-whole {
-            display: inline-block;
-            height: 310px;
-            margin-right: 20px;
-            margin-left: 20px;
-            margin-top: 0px;
-            border: 1px solid rgb(179, 179, 179);
-            margin-top: 5px;
-            padding-left: 10px;
-
-        }
-
-        .stats-half {
-            display: block;
-            height: 143px;
-            margin-right: 20px;
-            margin-left: 0px;
-            margin-top: 0px;
-            margin-bottom: 20px;
-            border: 1px solid rgb(179, 179, 179);
-            margin-top: 5px;
-            padding-left: 10px;
-        }
-
-
-        .heading {
-            background-color: #E4EFFB;
         }
 
         .stat-heading {
@@ -217,6 +275,10 @@
         .stat-heading img {
             margin-left: 0px;
             width: 1200px;
+        }
+
+        .heading {
+            background-color: #E4EFFB;
         }
 
         .container {
@@ -245,6 +307,7 @@
         .big img {
             margin-left: auto;
             margin-right: 50px;
+            margin-top: 20px;
         }
 
         .articles {
