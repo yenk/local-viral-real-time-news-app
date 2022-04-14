@@ -116,7 +116,7 @@ def get_local_avg_covid_data(county):
     )
 
     avg_data = avg_data[avg_data["county"] == county]
-    return avg_data.to_csv("local_avg_covid_data.csv")
+    return avg_data
 
 
 def get_local_live_covid_data(county):
@@ -135,7 +135,18 @@ def get_local_live_covid_data(county):
     )
 
     live_data = live_data[live_data["county"] == county]
-    return live_data.to_csv("local_covid_data.csv")
+    return live_data.to_csv()
+
+
+def get_current_day_covid_cases(county):
+    data = get_local_live_covid_data(county)
+    return data.split("\n")[1].split(",")[8]
+
+
+def get_week_avg_covid_cases(county):
+    data = get_local_avg_covid_data(county)
+    print(type(data))
+    return data["cases_avg"].iloc[-1]
 
 
 def get_local_weather_data(zip):
@@ -339,7 +350,6 @@ def get_metro_alert_data():
         all_lines = []
         for incident in data.get("Incidents"):
             lines = incident.get("LinesAffected").replace(";", "").split(" ")
-            print(lines)
             all_lines.extend(lines)
 
         data["all_lines"] = list(set(all_lines))

@@ -18,9 +18,17 @@
     <div class="main">
         <div class="stats-whole">
             <img src="/static/covid.png">
-            <a href="https://axios-live-dc-covid.herokuapp.com/">
-                <img src="/static/covid-cases-graph.png">
-            </a>
+            <div class="scrollable-whole">
+                <h3>
+                    <p class="green">{{ covid_cases|int }} </p>new cases
+                </h3>
+                <a href="https://axios-live-dc-covid.herokuapp.com/">
+                    <img src="/static/covid-cases-graph.png">
+                </a>
+                <div>
+                    <p>7-day avg: {{ covid_week_avg|int }} </p>
+                </div>
+            </div>
         </div>
         <div>
             <div class="stats-half">
@@ -307,7 +315,7 @@
         .big img {
             margin-left: auto;
             margin-right: 50px;
-            margin-top: 20px;
+            margin-top: 50px;
         }
 
         .articles {
