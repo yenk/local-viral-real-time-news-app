@@ -1,3 +1,4 @@
+arrow==1.2.2
 asttokens==2.0.5
 backcall==0.2.0
 Brotli==1.0.9
