@@ -1,4 +1,6 @@
+import arrow
 import datetime
+from dateutil import parser
 import pandas
 import pendulum
 import pprint
@@ -76,11 +78,16 @@ def get_dash_content(audience, topics):
 
     for id in content_ids:
         resp = requests.get(f"https://api.axios.com/api/render/content/{id}/")
+        published_date = parser.parse(resp.json().get("published_date")).strftime(
+            "%Y-%m-%d %I:%M"
+        )
+        published_date = arrow.get(published_date, "YYYY-MM-DD HH:mm").humanize()
+
         dash_content[get_topic_key(resp.json().get("topics"), topics)].append(
             {
                 "headline": resp.json().get("headline"),
                 "permalink": resp.json().get("permalink"),
-                "published": resp.json().get("published_date"),
+                "published": published_date,
             }
         )
 
