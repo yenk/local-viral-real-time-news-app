@@ -25,39 +25,44 @@
         <div>
             <div class="stats-half">
                 <img src="/static/transport.png">
-                <h3>
-                    <p class="red">{{ bus_data.BusIncidents|length }} </p>bus alerts
+                <div class="scrollable-half">
+                    <h3>
+                        <p class="red">{{ bus_data.BusIncidents|length }} </p>bus alerts
+                    </h3>
                     {%if bus_data.BusIncidents|length >= 1%}
                     <p class="transport">
                     <p class="transport-link">{{ bus_data.total_routes_affected }} routes </p>affected:
                     {%for route in bus_data.all_routes%}
                     {{ route }}
                     {%endfor%}
+                    {%endif%}
                     </p>
-                </h3>
-                {%endif%}
-
-                <h3>
-                    <p class="red">{{ metro_data.Incidents|length }} </p>train alerts
-                </h3>
-                {%if metro_data.Incidents|length >= 1%}
-                <p class="transport">
-                <p class="transport-link">{{ metro_data.total_lines_affected }} lines </p>affected:
-                {%for line in metro_data.all_lines%}
-                {{ line }}
-                {%endfor%}
-                </p>
-                {%endif%}
+                    <h3>
+                        <p class="red">{{ metro_data.Incidents|length }} </p>train alerts
+                    </h3>
+                    {%if metro_data.Incidents|length >= 1%}
+                    <p class="transport">
+                    <p class="transport-link">{{ metro_data.total_lines_affected }} lines </p>affected:
+                    {%for line in metro_data.all_lines%}
+                    {{ line }}
+                    {%endfor%}
+                    </p>
+                    {%endif%}
+                </div>
             </div>
             <div class="stats-half">
                 <img src="/static/weather.png">
-                <h3>
-                    <p class="brown">{{ weather.main.temp|int|round }}&#176; </p>{{ weather.weather[0].main }}
-                </h3>
-                <p>
-                    Temperature <br> H - {{ weather.main.temp_max|int|round }} L - {{ weather.main.temp_min|int|round }}
-                </p>
-                <p>Humidity <br> {{ weather.main.humidity }}%</p>
+                <div class="scrollable-half">
+
+                    <h3>
+                        <p class="brown">{{ weather.main.temp|int|round }}&#176; </p>{{ weather.weather[0].main }}
+                    </h3>
+                    <p>
+                        Temperature <br> H - {{ weather.main.temp_max|int|round }} L - {{
+                        weather.main.temp_min|int|round }}
+                    </p>
+                    <p>Humidity <br> {{ weather.main.humidity }}%</p>
+                </div>
             </div>
         </div>
 
@@ -66,7 +71,7 @@
             <h3>
                 <p class="green">{{ events|length }}</p> fun things
             </h3>
-            <div class="scrollable">
+            <div class="scrollable-whole">
 
                 {%for event in events%}
                 <a href={{ event.url }}>
@@ -165,18 +170,22 @@
         .main h3 {
             display: inline-block;
             margin: 0px;
-            margin-bottom: 5px;
         }
 
         .main p {
             margin-bottom: 0px;
         }
 
-        .stats-whole,
-        .scrollable {
+        .scrollable-whole {
             overflow: scroll;
             height: 250px;
         }
+
+        .scrollable-half {
+            overflow: scroll;
+            height: 110px;
+        }
+
 
         a {
             text-decoration: none;
@@ -227,14 +236,17 @@
             font-size: 25px;
             display: inline;
         }
+
         .brown {
             color: #AB7D36;
             font-size: 25px;
             display: inline;
         }
+
         .transport-link {
             color: blue;
             text-decoration: underline;
+            display: inline;
         }
 
         /* -------------------- End of main dash styling ---------------- */
