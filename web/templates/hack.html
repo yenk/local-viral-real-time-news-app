@@ -24,10 +24,10 @@
                     <p class="red">{{ bus_data.BusIncidents|length }} </p>bus alerts
                     {%if bus_data.BusIncidents|length >= 1%}
                     <p class="transport">
-                        {{ bus_data.total_routes_affected }} routes affected:
-                        {%for route in bus_data.all_routes%}
-                        {{ route }}
-                        {%endfor%}
+                    <p class="transport-link">{{ bus_data.total_routes_affected }} routes </p>affected:
+                    {%for route in bus_data.all_routes%}
+                    {{ route }}
+                    {%endfor%}
                     </p>
                 </h3>
                 {%endif%}
@@ -37,18 +37,18 @@
                 </h3>
                 {%if metro_data.Incidents|length >= 1%}
                 <p class="transport">
-                    {{ metro_data.total_lines_affected }} lines affected:
-                    {%for line in metro_data.all_lines%}
-                    {{ line }}
-                    {%endfor%}
+                <p class="transport-link">{{ metro_data.total_lines_affected }} lines </p>affected:
+                {%for line in metro_data.all_lines%}
+                {{ line }}
+                {%endfor%}
                 </p>
                 {%endif%}
             </div>
             <div class="stats-half">
                 <img src="/static/weather.png">
-                <p>
-                    {{ weather.main.temp|int|round }}&#176; {{ weather.weather[0].main }}
-                </p>
+                <h3>
+                    <p class="brown">{{ weather.main.temp|int|round }}&#176; </p>{{ weather.weather[0].main }}
+                </h3>
                 <p>
                     Temperature <br> H - {{ weather.main.temp_max|int|round }} L - {{ weather.main.temp_min|int|round }}
                 </p>
@@ -150,7 +150,8 @@
             color: rgb(143, 143, 143);
             margin-top: 7px;
         }
-        .transport{
+
+        .transport {
             font-size: 15px;
             color: rgb(44, 44, 44);
             margin-top: 7px;
@@ -218,11 +219,18 @@
 
         .red {
             color: #FA4F3B;
-            ;
             font-size: 25px;
             display: inline;
         }
-
+        .brown {
+            color: #AB7D36;
+            font-size: 25px;
+            display: inline;
+        }
+        .transport-link {
+            color: blue;
+            text-decoration: underline;
+        }
 
         /* -------------------- End of main dash styling ---------------- */
 
