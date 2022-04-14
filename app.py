@@ -1,8 +1,5 @@
 from flask import Flask, render_template
 from backend import server
-from dashy import cov
-# import server 
-# import cov 
 
 app = Flask(__name__)
 
