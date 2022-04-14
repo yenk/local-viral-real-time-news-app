@@ -53,14 +53,20 @@
         </div>
 
         <div class="stats-whole">
-            <img src="/static/weekend.png">
-            <h2>{{ events|length }} fun things</h2>
-            {%for event in events%}
-            <a href={{ event.url }}>
-                <p>{{ event.name }}</p>
-            </a>
-            <p>{{ event.start }}</p>
-            {%endfor%}
+            <img src="/static/weekend.png"><br>
+            <h3>
+                <p class="green">{{ events|length }}</p> fun things
+            </h3>
+            <div class="scrollable">
+
+                {%for event in events%}
+                <a href={{ event.url }}>
+                    <p>{{ event.name }}</p>
+                </a>
+                <p class="date-time">{{ event.start }}</p>
+                {%endfor%}
+            </div>
+
         </div>
         <div>
             <div class="stats-half"><img src="/static/todo.png">
@@ -106,7 +112,7 @@
     <style>
         .main {
             width: 1255px;
-            height: 300px;
+            height: 350x;
             display: block;
             margin-left: auto;
             margin-right: auto;
@@ -127,28 +133,41 @@
             display: block;
             width: 265px;
             float: left;
-            margin-top: 5px;
+            margin-top: 10px;
+            margin-bottom: 5px;
         }
 
-        .dash-content{
+        .dash-content {
             font-size: 20px;
         }
 
         .date-time {
-            font-size: 12px;
+            font-size: 15px;
             color: rgb(143, 143, 143);
+            margin-top: 7px;
         }
 
-        a:link {
-            text-decoration: none;
-            color: black;
-            font-size: 20px;
+        .main h3 {
+            display: inline-block;
+            margin: 0px;
+            margin-bottom: 5px;
         }
 
-        a:visited {
+        .main p {
+            margin-bottom: 0px;
+        }
+
+        .stats-whole,
+        .scrollable {
+            overflow: scroll;
+            height: 250px;
+        }
+
+        a {
             text-decoration: none;
             color: black;
-            font-size: 20px;
+            font-size: 18px;
+            font-weight: lighter;
         }
 
         a:hover {
@@ -159,32 +178,20 @@
             text-decoration: underline;
         }
 
-        .nav {
-            background-color: #E4EFFB;
-            display: flex;
-            border-bottom: 1px solid rgb(95, 175, 221);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 999;
-            width: 100%;
-        }
-
         .stats-whole {
             display: inline-block;
-            height: 310px;
+            height: 328px;
             margin-right: 20px;
             margin-left: 20px;
             margin-top: 0px;
             border: 1px solid rgb(179, 179, 179);
             margin-top: 5px;
             padding-left: 10px;
-
         }
 
         .stats-half {
             display: block;
-            height: 143px;
+            height: 150px;
             margin-right: 20px;
             margin-left: 0px;
             margin-top: 0px;
@@ -194,9 +201,25 @@
             padding-left: 10px;
         }
 
+        .green {
 
-        .heading {
+            color: #326C5C;
+            font-size: 25px;
+            display: inline;
+
+        }
+
+        /* -------------------- End of main dash styling ---------------- */
+
+        .nav {
             background-color: #E4EFFB;
+            display: flex;
+            border-bottom: 1px solid rgb(95, 175, 221);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            width: 100%;
         }
 
         .stat-heading {
@@ -212,6 +235,10 @@
         .stat-heading img {
             margin-left: 0px;
             width: 1200px;
+        }
+
+        .heading {
+            background-color: #E4EFFB;
         }
 
         .container {
@@ -240,6 +267,7 @@
         .big img {
             margin-left: auto;
             margin-right: 50px;
+            margin-top: 20px;
         }
 
         .articles {
