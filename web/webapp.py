@@ -1,10 +1,5 @@
-from flask import Flask, render_template
+from flask import render_template
 from backend import server
-
-# app = Flask(__name__)
-
-
-# @app.route("/")
 
 
 def fetch_page():
@@ -23,7 +18,3 @@ def fetch_page():
         bus_data=bus_data,
         metro_data=metro_data,
     )
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
