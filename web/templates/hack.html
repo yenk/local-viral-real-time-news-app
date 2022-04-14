@@ -20,19 +20,23 @@
         <div>
             <div class="stats-half">
                 <img src="/static/transport.png">
-                <p>{{ bus_data.BusIncidents|length }} bus alerts</p>
-                {%if bus_data.BusIncidents|length >= 1%}
-                <p>
-                    {{ bus_data.total_routes_affected }} routes affected:
-                    {%for route in bus_data.all_routes%}
-                    {{ route }}
-                    {%endfor%}
-                </p>
+                <h3>
+                    <p class="red">{{ bus_data.BusIncidents|length }} </p>bus alerts
+                    {%if bus_data.BusIncidents|length >= 1%}
+                    <p class="transport">
+                        {{ bus_data.total_routes_affected }} routes affected:
+                        {%for route in bus_data.all_routes%}
+                        {{ route }}
+                        {%endfor%}
+                    </p>
+                </h3>
                 {%endif%}
 
-                <p>{{ metro_data.Incidents|length }} train alerts</p>
+                <h3>
+                    <p class="red">{{ metro_data.Incidents|length }} </p>train alerts
+                </h3>
                 {%if metro_data.Incidents|length >= 1%}
-                <p>
+                <p class="transport">
                     {{ metro_data.total_lines_affected }} lines affected:
                     {%for line in metro_data.all_lines%}
                     {{ line }}
@@ -146,6 +150,11 @@
             color: rgb(143, 143, 143);
             margin-top: 7px;
         }
+        .transport{
+            font-size: 15px;
+            color: rgb(44, 44, 44);
+            margin-top: 7px;
+        }
 
         .main h3 {
             display: inline-block;
@@ -191,23 +200,29 @@
 
         .stats-half {
             display: block;
-            height: 150px;
+            height: 155px;
             margin-right: 20px;
             margin-left: 0px;
             margin-top: 0px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             border: 1px solid rgb(179, 179, 179);
             margin-top: 5px;
             padding-left: 10px;
         }
 
         .green {
-
             color: #326C5C;
             font-size: 25px;
             display: inline;
-
         }
+
+        .red {
+            color: #FA4F3B;
+            ;
+            font-size: 25px;
+            display: inline;
+        }
+
 
         /* -------------------- End of main dash styling ---------------- */
 
