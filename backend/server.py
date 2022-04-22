@@ -11,7 +11,7 @@ import http.client, urllib.request, urllib.parse, urllib.error
 from google.transit import gtfs_realtime_pb2
 from google.protobuf.json_format import MessageToJson
 
-import dummy_data
+from backend import dummy_data
 
 
 def sluggify(value):
