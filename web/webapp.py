@@ -20,5 +20,5 @@ def fetch_page():
         bus_data=bus_data,
         metro_data=metro_data,
         covid_cases=covid_cases,
-        covid_week_avg=covid_week_avg,
+        covid_week_avg=covid_week_avg
     )
