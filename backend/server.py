@@ -253,8 +253,9 @@ def get_local_event_data(zip, radius):
     )
 
     events = {"events": []}
-    for event in resp.json().get("_embedded").get("events"):
+    for event in resp.json().get("_embedded", {}).get("events", {}):
         details = {}
+        # print(details)
         details["name"] = event.get("name")
         details["url"] = event.get("url")
         details["description"] = event.get("description")
@@ -552,12 +553,13 @@ def get_bus_alert_data():
 
 
 if __name__ == "__main__":
-    pprint.pprint(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
-    print(get_local_avg_covid_data("District of Columbia"))
-    print(get_local_live_covid_data("District of Columbia"))
-    pprint.pprint(get_local_weather_data("20001"))
+    # pprint.pprint(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
+    # print(get_local_avg_covid_data("District of Columbia"))
+    # print(get_local_live_covid_data("District of Columbia"))
+    # pprint.pprint(get_local_weather_data("20001"))
     pprint.pprint(get_local_event_data("20001", 50))
-    pprint.pprint(get_metro_alert_data())
-    pprint.pprint(get_metro_trip_update_data())
-    pprint.pprint(get_metro_vehicles_position_data())
-    pprint.pprint(get_bus_alert_data())
+    # pprint.pprint(get_metro_alert_data())
+    # pprint.pprint(get_metro_trip_update_data())
+    # pprint.pprint(get_metro_vehicles_position_data())
+    # pprint.pprint(get_bus_alert_data())
+    # # get_local_event_data
