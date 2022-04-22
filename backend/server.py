@@ -1,6 +1,8 @@
+from multiprocessing import dummy
 import arrow
 import datetime
 from dateutil import parser
+import logging
 import pandas
 import pendulum
 import pprint
@@ -9,6 +11,8 @@ import http.client, urllib.request, urllib.parse, urllib.error
 from google.transit import gtfs_realtime_pb2
 from google.protobuf.json_format import MessageToJson
 
+from backend import dummy_data
+
 
 def sluggify(value):
     return value.replace(" ", "-").lower()
@@ -16,7 +20,9 @@ def sluggify(value):
 
 def get_topic_key(content_topics, req_topics):
     current_topic = next(
-        topic.get("name") for topic in content_topics if topic.get("name") in req_topics
+        topic.get("name", "")
+        for topic in content_topics
+        if topic.get("name", "") in req_topics
     )
     return current_topic
 
@@ -62,36 +68,45 @@ def get_dash_content(audience, topics):
     }
     """
 
-    dash_content = {}
-    content_ids = []
+    response = dummy_data.content_data
+    try:
+        dash_content = {}
+        content_ids = []
 
-    for topic in topics:
-        resp = (
-            requests.get(
-                f"https://api.axios.com/api/render/stream/content?audience_slug={sluggify(audience)}&topic_slug={sluggify(topic)}"
+        for topic in topics:
+            resp = (
+                requests.get(
+                    f"https://api.axios.com/api/render/stream/content?audience_slug={sluggify(audience)}&topic_slug={sluggify(topic)}"
+                )
+                .json()
+                .get("results")
             )
-            .json()
-            .get("results")
-        )
-        content_ids.extend(resp)
-        dash_content[topic] = []
+            content_ids.extend(resp)
+            dash_content[topic] = []
 
-    for id in content_ids:
-        resp = requests.get(f"https://api.axios.com/api/render/content/{id}/")
-        published_date = parser.parse(resp.json().get("published_date")).strftime(
-            "%Y-%m-%d %I:%M"
-        )
-        published_date = arrow.get(published_date, "YYYY-MM-DD HH:mm").humanize()
+        for id in content_ids:
+            resp = requests.get(f"https://api.axios.com/api/render/content/{id}/")
+            published_date = parser.parse(
+                resp.json().get("published_date", "")
+            ).strftime("%Y-%m-%d %I:%M")
+            published_date = arrow.get(published_date, "YYYY-MM-DD HH:mm").humanize()
 
-        dash_content[get_topic_key(resp.json().get("topics"), topics)].append(
-            {
-                "headline": resp.json().get("headline"),
-                "permalink": resp.json().get("permalink"),
-                "published": published_date,
-            }
+            dash_content[get_topic_key(resp.json().get("topics", []), topics)].append(
+                {
+                    "headline": resp.json().get("headline", ""),
+                    "permalink": resp.json().get("permalink", ""),
+                    "published": published_date,
+                }
+            )
+        response = dash_content
+
+    except Exception as e:
+        logging.getLogger().error(
+            f"error fetching local dashboard axios content: {e}, returning dummy data"
         )
 
-    return dash_content
+    finally:
+        return response
 
 
 def get_local_avg_covid_data(county):
@@ -111,12 +126,16 @@ def get_local_avg_covid_data(county):
         325436,2022-04-10,USA-11001,District of Columbia,District of Columbia,0,143.57,20.34,0,0.29,0.04
     """
 
-    avg_data = pandas.read_csv(
-        "https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-2022.csv",
-    )
+    try:
+        avg_data = pandas.read_csv(
+            "https://raw.githubusercontent.com/nytimes/covid-19-data/master/rolling-averages/us-counties-2022.csv",
+        )
 
-    avg_data = avg_data[avg_data["county"] == county]
-    return avg_data
+        avg_data = avg_data[avg_data["county"] == county]
+        return avg_data
+
+    except Exception as e:
+        logging.getLogger().error(f"error fetching local dashboard covid avg data: {e}")
 
 
 def get_local_live_covid_data(county):
@@ -130,23 +149,40 @@ def get_local_live_covid_data(county):
         322,2022-04-11,District of Columbia,District of Columbia,11001.0,137603,1331.0,134623.0,1319.0,2980.0,12.0
     """
 
-    live_data = pandas.read_csv(
-        "https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv"
-    )
+    try:
+        live_data = pandas.read_csv(
+            "https://raw.githubusercontent.com/nytimes/covid-19-data/master/live/us-counties.csv"
+        )
 
-    live_data = live_data[live_data["county"] == county]
-    return live_data.to_csv()
+        live_data = live_data[live_data["county"] == county]
+        return live_data.to_csv()
+
+    except Exception as e:
+        logging.getLogger().error(
+            f"error fetching local dashboard covid live data: {e}"
+        )
 
 
 def get_current_day_covid_cases(county):
-    data = get_local_live_covid_data(county)
-    return data.split("\n")[1].split(",")[8]
+    try:
+        data = get_local_live_covid_data(county)
+        return data.split("\n")[1].split(",")[8]
+    except Exception as e:
+        logging.getLogger().error(
+            f"error fetching local dashboard current day covid cases: {e}"
+        )
+        return "200"
 
 
 def get_week_avg_covid_cases(county):
-    data = get_local_avg_covid_data(county)
-    print(type(data))
-    return data["cases_avg"].iloc[-1]
+    try:
+        data = get_local_avg_covid_data(county)
+        return data["cases_avg"].iloc[-1]
+    except Exception as e:
+        logging.getLogger().error(
+            f"error fetching local dashboard week avg covid cases: {e}"
+        )
+        return "180"
 
 
 def get_local_weather_data(zip):
@@ -192,17 +228,26 @@ def get_local_weather_data(zip):
 
     api_key = "fb8d8414adc882229cec5abc077b21e1"
 
-    resp = requests.get(
-        f"http://api.openweathermap.org/geo/1.0/zip?zip={zip},US&appid={api_key}"
-    )
-    lat = resp.json().get("lat")
-    lon = resp.json().get("lon")
+    response = dummy_data.weather_data
+    try:
+        resp = requests.get(
+            f"http://api.openweathermap.org/geo/1.0/zip?zip={zip},US&appid={api_key}"
+        )
+        lat = resp.json().get("lat")
+        lon = resp.json().get("lon")
 
-    weather_data = requests.get(
-        f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=Imperial"
-    ).json()
+        weather_data = requests.get(
+            f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=Imperial"
+        ).json()
 
-    return weather_data
+        response = weather_data
+    except Exception as e:
+        logging.getLogger().error(
+            f"error fetching local dashboard weather data: {e}, returning dummy data"
+        )
+
+    finally:
+        return response
 
 
 def get_local_event_data(zip, radius):
@@ -248,42 +293,50 @@ def get_local_event_data(zip, radius):
     weekend_start = pendulum.now().next(pendulum.FRIDAY).strftime("%Y-%m-%dT%H:%M:%SZ")
     weekend_end = pendulum.now().next(pendulum.SUNDAY).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    resp = requests.get(
-        f"https://app.ticketmaster.com/discovery/v2/events?apikey={api_key}&locale=*&startDateTime={str(weekend_start)}&endDateTime={str(weekend_end)}&postalCode={str(zip)}&radius={str(radius)}&unit=miles"
-    )
+    response = dummy_data.event_data
+    try:
+        resp = requests.get(
+            f"https://app.ticketmaster.com/discovery/v2/events?apikey={api_key}&locale=*&startDateTime={str(weekend_start)}&endDateTime={str(weekend_end)}&postalCode={str(zip)}&radius={str(radius)}&unit=miles"
+        )
 
-    events = {"events": []}
-    for event in resp.json().get("_embedded", {}).get("events", {}):
-        details = {}
-        # print(details)
-        details["name"] = event.get("name")
-        details["url"] = event.get("url")
-        details["description"] = event.get("description")
+        events = {"events": []}
+        for event in resp.json().get("_embedded", {}).get("events", {}):
+            details = {}
+            details["name"] = event.get("name")
+            details["url"] = event.get("url")
+            details["description"] = event.get("description")
 
-        # get formatted date and time based on given time zone
-        tz = event.get("dates").get("start").get("timezone")
-        start = event.get("dates").get("start").get("dateTime")
-        if start != "":
-            start = (
-                datetime.datetime.strptime(start, "%Y-%m-%dT%H:%M:%SZ")
-                .replace(tzinfo=tz)
-                .strftime("%A, %B %d, %I:%M")
-            )
-        end = event.get("dates").get("end", {}).get("dateTime", "")
-        if end != "":
-            end = (
-                datetime.datetime.strptime(end, "%Y-%m-%dT%H:%M:%SZ")
-                .replace(tzinfo=tz)
-                .strftime("%I:%M")
-            )
+            # get formatted date and time based on given time zone
+            tz = event.get("dates").get("start").get("timezone")
+            start = event.get("dates").get("start").get("dateTime")
+            if start != "":
+                start = (
+                    datetime.datetime.strptime(start, "%Y-%m-%dT%H:%M:%SZ")
+                    .replace(tzinfo=tz)
+                    .strftime("%A, %B %d, %I:%M")
+                )
+            end = event.get("dates").get("end", {}).get("dateTime", "")
+            if end != "":
+                end = (
+                    datetime.datetime.strptime(end, "%Y-%m-%dT%H:%M:%SZ")
+                    .replace(tzinfo=tz)
+                    .strftime("%I:%M")
+                )
 
-        details["start"] = start
-        details["end"] = end
-        details["venue"] = event.get("_embedded").get("venues")[0].get("name")
+            details["start"] = start
+            details["end"] = end
+            details["venue"] = event.get("_embedded").get("venues")[0].get("name")
 
-        events["events"].append(details)
+            events["events"].append(details)
 
-    return events
+            response = events
+    except Exception as e:
+        logging.getLogger().error(
+            f"error fetching local dashboard event data: {e}, returning dummy data"
+        )
+
+    finally:
+        return response
 
 
 def get_metro_alert_data():
@@ -343,23 +396,29 @@ def get_metro_alert_data():
         "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
     }
 
+    response = dummy_data.metro_data
     try:
         data = requests.get(
             "https://api.wmata.com/Incidents.svc/json/Incidents", headers=headers
         ).json()
 
         all_lines = []
-        for incident in data.get("Incidents"):
-            lines = incident.get("LinesAffected").replace(";", "").split(" ")
+        for incident in data.get("Incidents", {}):
+            lines = incident.get("LinesAffected", "").replace(";", "").split(" ")
             all_lines.extend(lines)
 
         data["all_lines"] = list(set(all_lines))
-        data["total_lines_affected"] = len(data.get("all_lines"))
+        data["total_lines_affected"] = len(data.get("all_lines", []))
 
-        return data
+        response = data
 
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e))
+        logging.getLogger().error(
+            f"error fetching local dashboard metro alert data: [Errno {e.errno}] {e}, returning dummy data"
+        )
+
+    finally:
+        return response
 
 
 def get_metro_trip_update_data():
@@ -438,7 +497,7 @@ def get_metro_trip_update_data():
         return MessageToJson(trip_updates)
 
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        logging.getLogger().error("[Errno {0}] {1}".format(e.errno, e.strerror))
 
 
 def get_metro_vehicles_position_data():
@@ -506,7 +565,7 @@ def get_metro_vehicles_position_data():
         return MessageToJson(vehicles)
 
     except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        logging.getLogger().error("[Errno {0}] {1}".format(e.errno, e.strerror))
 
 
 def get_bus_alert_data():
@@ -534,6 +593,7 @@ def get_bus_alert_data():
         "api_key": "3ee0597845df41f3a0d77a2668cf3e24",
     }
 
+    response = dummy_data.bus_data
     try:
         data = requests.get(
             f"https://api.wmata.com/Incidents.svc/json/BusIncidents", headers=headers
@@ -546,20 +606,24 @@ def get_bus_alert_data():
         data["all_routes"] = list(set(all_routes))
         data["total_routes_affected"] = len(data.get("all_routes"))
 
-        return data
+        response = data
 
     except Exception as e:
-        print(f"[Errno {e.errno}] {e}")
+        logging.getLogger().error(
+            f"error fetching local dashboard bus alert data: [Errno {e.errno}] {e}, returning dummy data"
+        )
+
+    finally:
+        return response
 
 
 if __name__ == "__main__":
-    # pprint.pprint(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
-    # print(get_local_avg_covid_data("District of Columbia"))
-    # print(get_local_live_covid_data("District of Columbia"))
-    # pprint.pprint(get_local_weather_data("20001"))
-    pprint.pprint(get_local_event_data("20001", 50))
-    # pprint.pprint(get_metro_alert_data())
-    # pprint.pprint(get_metro_trip_update_data())
-    # pprint.pprint(get_metro_vehicles_position_data())
-    # pprint.pprint(get_bus_alert_data())
-    # # get_local_event_data
+    pprint.pprint(get_dash_content("Washington DC", ["Things to Do", "Food and Drink"]))
+    print(get_local_avg_covid_data("District of Columbia"))
+    print(get_local_live_covid_data("District of Columbia"))
+    pprint.pprint(get_local_weather_data("20001"))
+    pprint.pprint(get_local_event_data("20001", 75))
+    pprint.pprint(get_metro_alert_data())
+    pprint.pprint(get_metro_trip_update_data())
+    pprint.pprint(get_metro_vehicles_position_data())
+    pprint.pprint(get_bus_alert_data())
