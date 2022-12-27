@@ -3,7 +3,7 @@ This was a viral DC metro real-time application and covid dashboard created as p
 
 Our application is hosted by [Heroku](https://www.heroku.com/). 
 
-**note** Due to Heroku's latest policy changes as a paid service for using dynos features, it's no longer an open source platform.
+**note** -> Due to Heroku's latest policy changes as a paid service for using dynos features, it's no longer an open source platform.
 
 Tech stack used: 
 Flask - Python microservice web framework
